@@ -1,0 +1,26 @@
+---
+// Phosphor icons (regular weight), inlined at build time from @phosphor-icons/core.
+import instagram from '@phosphor-icons/core/assets/regular/instagram-logo.svg?raw';
+import arrowRight from '@phosphor-icons/core/assets/regular/arrow-right.svg?raw';
+import arrowUpRight from '@phosphor-icons/core/assets/regular/arrow-up-right.svg?raw';
+import list from '@phosphor-icons/core/assets/regular/list.svg?raw';
+import x from '@phosphor-icons/core/assets/regular/x.svg?raw';
+import caretLeft from '@phosphor-icons/core/assets/regular/caret-left.svg?raw';
+import caretRight from '@phosphor-icons/core/assets/regular/caret-right.svg?raw';
+
+const icons = { instagram, arrowRight, arrowUpRight, list, x, caretLeft, caretRight };
+
+interface Props {
+  name: keyof typeof icons;
+  size?: number;
+  class?: string;
+}
+
+const { name, size = 20, class: className } = Astro.props;
+const svg = icons[name].replace(
+  '<svg ',
+  `<svg width="${size}" height="${size}" aria-hidden="true" focusable="false" class="icon ${className ?? ''}" `,
+);
+---
+
+<Fragment set:html={svg} />

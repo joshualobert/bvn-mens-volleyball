@@ -1,0 +1,301 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { team, varsitySchedule, jvSchedule, postseason, seasons, type MatchDay } from '../data/team';
+import { dateParts } from '../lib/site';
+
+const tables: { id: string; title: string; days: MatchDay[] }[] = [
+  { id: 'varsity', title: 'Varsity regular season', days: varsitySchedule },
+  { id: 'jv', title: 'JV regular season', days: jvSchedule },
+];
+---
+
+<Base
+  title="Schedule and Results"
+  description="Blue Valley North Men's Volleyball 2026 schedule and results: varsity and JV match days, the state tournament run to the Final Four, and season records."
+  path="/schedule/"
+>
+  <PageHero
+    title="Schedule and Results"
+    intro="The complete 2026 season. The 2027 schedule will be posted here once it is released."
+    photo="state-tournament-jump-serve"
+    focal="45% 30%"
+  />
+
+  <section class="section" aria-labelledby="post-title">
+    <div class="wrap">
+      <h2 id="post-title" class="display h-lg">2026 Postseason</h2>
+      <ol class="post">
+        {
+          postseason.map((step) => {
+            const d = dateParts(step.date);
+            return (
+              <li>
+                <span class="p-date">
+                  {d.weekday}, {d.month} {d.day}
+                </span>
+                <span class="p-title display">{step.title}</span>
+                <span class="p-detail">{step.detail}</span>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="records-title">
+    <div class="wrap">
+      <h2 id="records-title" class="display h-md">Season records</h2>
+      <div class="table-wrap">
+        <table class="records">
+          <thead>
+            <tr>
+              <th scope="col">Season</th>
+              <th scope="col">Team</th>
+              <th scope="col" class="num">Matches</th>
+              <th scope="col" class="num">Sets</th>
+              <th scope="col" class="num">League rank</th>
+              <th scope="col">Finish</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              seasons.map((s) => (
+                <tr>
+                  <td>{s.year}</td>
+                  <td>{s.level}</td>
+                  <td class="num strong">
+                    {s.wins}-{s.losses}
+                  </td>
+                  <td class="num">
+                    {s.setWins}-{s.setLosses}
+                  </td>
+                  <td class="num">
+                    {s.rank} of {s.teams}
+                  </td>
+                  <td>{s.finish ?? ''}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="note">
+        Records and rankings come from the <a class="text-link" href={team.league.standings} rel="noopener" target="_blank"
+          >{team.league.name} archived final standings</a
+        >. Individual match scores are not published here.
+      </p>
+    </div>
+  </section>
+
+  {
+    tables.map((t) => (
+      <section class="section" aria-labelledby={`${t.id}-title`}>
+        <div class="wrap">
+          <h2 id={`${t.id}-title`} class="display h-md">
+            {t.title}
+          </h2>
+          <div class="table-wrap">
+            <table class="sched">
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Opponents</th>
+                  <th scope="col">Site</th>
+                </tr>
+              </thead>
+              <tbody>
+                {t.days.map((m) => {
+                  const d = dateParts(m.date);
+                  return (
+                    <tr>
+                      <td class="s-date">
+                        <span class="s-day display">
+                          {d.month} {d.day}
+                        </span>
+                        <span class="s-wk">{d.weekday}</span>
+                      </td>
+                      <td class="s-opp">
+                        {m.opponents.map((o) => (
+                          <span>
+                            <span class="vs">vs</span> {o}
+                          </span>
+                        ))}
+                      </td>
+                      <td>
+                        <span class:list={['site', m.site.toLowerCase()]}>{m.site}</span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="section next" aria-labelledby="next-title">
+    <div class="wrap next-inner">
+      <h2 id="next-title" class="display h-md">2027 season</h2>
+      <p class="prose">
+        The 2027 schedule has not been released yet. It will be announced on the team Instagram and added to this page.
+        League-wide dates are published by {team.league.name}.
+      </p>
+      <div class="next-links">
+        <a class="btn btn-primary" href={team.instagram} rel="noopener" target="_blank">
+          <Icon name="instagram" size={18} /> Instagram
+        </a>
+        <a class="btn btn-secondary" href={team.league.url} rel="noopener" target="_blank">
+          League site <Icon name="arrowUpRight" size={18} />
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .post {
+    margin-top: clamp(32px, 4vw, 48px);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 2px solid var(--ink);
+  }
+  .post li {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    padding: 24px 28px 8px 0;
+  }
+  .post li + li {
+    padding-left: 28px;
+    border-left: 1px solid var(--line);
+  }
+  .p-date {
+    font-weight: 750;
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .p-title {
+    font-size: clamp(1.875rem, 3vw, 2.625rem);
+  }
+  .p-detail {
+    color: var(--ink-2);
+  }
+  .table-wrap {
+    margin-top: 28px;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th {
+    text-align: left;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 16px 12px 0;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  td {
+    padding: 18px 16px 18px 0;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+  }
+  .num {
+    text-align: right;
+  }
+  .strong {
+    font-weight: 750;
+  }
+  .records td {
+    font-size: 1.0625rem;
+  }
+  .note {
+    margin-top: 20px;
+    font-size: 0.9375rem;
+    color: var(--muted);
+    max-width: 70ch;
+  }
+  .s-date {
+    width: 140px;
+  }
+  .s-day {
+    display: block;
+    font-size: 1.75rem;
+  }
+  .s-wk {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .s-opp {
+    display: grid;
+    gap: 2px;
+    font-weight: 600;
+    font-size: 1.0625rem;
+  }
+  .vs {
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .site {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-2);
+  }
+  .site.home {
+    background: var(--brand-block);
+    border-color: var(--brand-block);
+    color: var(--on-brand);
+  }
+  .next {
+    background: var(--surface);
+  }
+  .next-inner {
+    display: grid;
+    gap: 20px;
+    justify-items: start;
+  }
+  .next-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  @media (max-width: 767px) {
+    .post {
+      grid-template-columns: 1fr;
+    }
+    .post li,
+    .post li + li {
+      padding: 20px 0;
+      border-left: 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .s-date {
+      width: 88px;
+    }
+    .s-day {
+      font-size: 1.375rem;
+    }
+    .s-opp {
+      font-size: 0.9875rem;
+    }
+    .records {
+      min-width: 560px;
+    }
+  }
+</style>

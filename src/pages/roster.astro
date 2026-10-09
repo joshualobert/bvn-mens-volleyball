@@ -1,0 +1,211 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import { roster, positionNames, type Position } from '../data/team';
+
+const [varsity, floaters, jv] = ['varsity', 'floaters', 'jv'].map((id) => roster.groups.find((g) => g.id === id)!);
+const total = roster.groups.reduce((n, g) => n + g.players.length, 0);
+const fullPositions = (ps?: Position[]) => ps?.map((p) => positionNames[p]).join(' / ') ?? '';
+---
+
+<Base
+  title="2026 Roster"
+  description="The 2026 Blue Valley North Men's Volleyball roster: varsity, JV and varsity floaters with positions for BVN Boys Volleyball."
+  path="/roster/"
+>
+  <PageHero
+    title={`${roster.season} Roster`}
+    intro={`${total} players across varsity and junior varsity, as announced by the team for the ${roster.season} season.`}
+    photo="medal-ceremony"
+    focal="50% 38%"
+  />
+
+  <section class="section" aria-labelledby="varsity-title">
+    <div class="wrap">
+      <div class="group-head">
+        <h2 id="varsity-title" class="display h-lg">{varsity.title}</h2>
+        <span class="count">{varsity.players.length} players</span>
+      </div>
+      <ul class="varsity">
+        {
+          varsity.players.map((p) => (
+            <li>
+              <span class="abbr">{p.positions?.join(' / ')}</span>
+              <span class="name display">{p.name}</span>
+              <span class="pos">{fullPositions(p.positions)}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <figure class="band">
+    <Photo slug="arms-around-huddle" sizes="100vw" class="photo-fill" focal="50% 40%" />
+  </figure>
+
+  <section class="section" aria-labelledby="jv-title">
+    <div class="wrap jv-grid">
+      <div>
+        <div class="group-head">
+          <h2 class="display h-md">{floaters.title}</h2>
+          <span class="count">{floaters.players.length} players</span>
+        </div>
+        <ul class="list">
+          {
+            floaters.players.map((p) => (
+              <li>
+                <span class="list-name">{p.name}</span>
+                <span class="list-pos">{fullPositions(p.positions)}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div>
+        <div class="group-head">
+          <h2 id="jv-title" class="display h-md">{jv.title}</h2>
+          <span class="count">{jv.players.length} players</span>
+        </div>
+        <ul class="list two-col">
+          {
+            jv.players.map((p) => (
+              <li>
+                <span class="list-name">{p.name}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="wrap key">
+      <h2 class="label">Positions</h2>
+      <dl>
+        {
+          (Object.keys(positionNames) as Position[]).map((k) => (
+            <div>
+              <dt>{k}</dt>
+              <dd>{positionNames[k]}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .group-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .count {
+    font-size: 0.9375rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .varsity {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .varsity li {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+    padding: 28px 28px 32px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .abbr {
+    font-weight: 750;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  .name {
+    font-size: clamp(2rem, 3.4vw, 3rem);
+    line-height: 0.95;
+  }
+  .pos {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+  .band {
+    height: clamp(260px, 38vw, 520px);
+  }
+  .jv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+  .list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .list-name {
+    font-weight: 650;
+    font-size: 1.1875rem;
+  }
+  .list-pos {
+    color: var(--muted);
+    font-size: 0.9375rem;
+    text-align: right;
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 32px;
+  }
+  .key {
+    margin-top: clamp(56px, 7vw, 96px);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 16px 32px;
+  }
+  .key dl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+  }
+  .key dl div {
+    display: flex;
+    gap: 8px;
+    font-size: 0.9375rem;
+  }
+  .key dt {
+    font-weight: 750;
+  }
+  .key dd {
+    color: var(--muted);
+  }
+  @media (max-width: 899px) {
+    .varsity {
+      grid-template-columns: 1fr 1fr;
+    }
+    .jv-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 559px) {
+    .varsity {
+      grid-template-columns: 1fr;
+    }
+    .varsity li {
+      padding: 20px 0 22px;
+    }
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,302 @@
+{
+  "attack-over-the-block": {
+    "alt": "A BVN attacker wearing No. 16 swings over a double block at the net",
+    "width": 3456,
+    "height": 2304,
+    "widths": [
+      640,
+      1280,
+      1920,
+      2560
+    ],
+    "focal": "35% 40%",
+    "group": "season",
+    "orientation": "landscape"
+  },
+  "huddle-hands-raised": {
+    "alt": "BVN players raise their hands together in a huddle before a match",
+    "width": 3456,
+    "height": 2304,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "50% 55%",
+    "group": "season",
+    "orientation": "landscape"
+  },
+  "medal-ceremony": {
+    "alt": "The team lines up with their medals and coach after a tournament",
+    "width": 3456,
+    "height": 2304,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "50% 45%",
+    "group": "season",
+    "orientation": "landscape"
+  },
+  "state-tournament-huddle": {
+    "alt": "Players reach in together between points at the 2026 state tournament",
+    "width": 3000,
+    "height": 2000,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "55% 50%",
+    "group": "state",
+    "orientation": "landscape"
+  },
+  "state-tournament-attack": {
+    "alt": "A BVN hitter elevates for an attack during state tournament pool play",
+    "width": 3000,
+    "height": 2000,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "45% 45%",
+    "group": "state",
+    "orientation": "landscape"
+  },
+  "state-tournament-high-fives": {
+    "alt": "Teammates trade high fives after winning a rally at the state tournament",
+    "width": 3000,
+    "height": 2000,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "50% 50%",
+    "group": "state",
+    "orientation": "landscape"
+  },
+  "state-tournament-jump-serve": {
+    "alt": "A BVN server tosses for a jump serve at the state tournament",
+    "width": 3000,
+    "height": 2000,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "45% 40%",
+    "group": "state",
+    "orientation": "landscape"
+  },
+  "state-tournament-celebration": {
+    "alt": "BVN players celebrate a point together at the state tournament",
+    "width": 3000,
+    "height": 2000,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "60% 50%",
+    "group": "state",
+    "orientation": "landscape"
+  },
+  "spike-at-the-net": {
+    "alt": "A BVN outside hitter attacks the ball high above the net",
+    "width": 3456,
+    "height": 2304,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "35% 40%",
+    "group": "season",
+    "orientation": "landscape"
+  },
+  "attack-number-21": {
+    "alt": "BVN No. 21 attacks from the left side as teammates cover",
+    "width": 2304,
+    "height": 3456,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "50% 35%",
+    "group": "season",
+    "orientation": "portrait"
+  },
+  "attack-with-coverage": {
+    "alt": "A BVN attacker swings while No. 16 and No. 18 cover behind him",
+    "width": 2304,
+    "height": 3456,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "50% 40%",
+    "group": "season",
+    "orientation": "portrait"
+  },
+  "timeout-with-coach": {
+    "alt": "Players gather around the coach during a timeout",
+    "width": 3456,
+    "height": 2304,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "50% 45%",
+    "group": "season",
+    "orientation": "landscape"
+  },
+  "arms-around-huddle": {
+    "alt": "Teammates huddle with arms around each other between sets",
+    "width": 3456,
+    "height": 2304,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "50% 45%",
+    "group": "season",
+    "orientation": "landscape"
+  },
+  "team-circle": {
+    "alt": "The team circles up courtside before warmups",
+    "width": 2592,
+    "height": 1728,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "50% 40%",
+    "group": "season",
+    "orientation": "landscape"
+  },
+  "jersey-number-15": {
+    "alt": "The back of a BV North No. 15 jersey as a player watches the play",
+    "width": 3456,
+    "height": 2304,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "55% 40%",
+    "group": "season",
+    "orientation": "landscape"
+  },
+  "jersey-number-21": {
+    "alt": "A player in the BV North No. 21 jersey waits at the net",
+    "width": 2304,
+    "height": 3456,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "50% 35%",
+    "group": "season",
+    "orientation": "portrait"
+  },
+  "libero-number-3": {
+    "alt": "The libero in the white No. 3 jersey looks across the court",
+    "width": 2304,
+    "height": 3456,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "50% 30%",
+    "group": "season",
+    "orientation": "portrait"
+  },
+  "bench-applause": {
+    "alt": "Players applaud a teammate's point from the court",
+    "width": 2304,
+    "height": 3456,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "55% 30%",
+    "group": "season",
+    "orientation": "portrait"
+  },
+  "teammates-on-court": {
+    "alt": "Two BVN teammates look toward the bench between rallies",
+    "width": 3456,
+    "height": 2304,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "60% 35%",
+    "group": "season",
+    "orientation": "landscape"
+  },
+  "libero-walk-on": {
+    "alt": "The libero walks onto the court in front of the crowd",
+    "width": 3456,
+    "height": 2304,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "55% 40%",
+    "group": "season",
+    "orientation": "landscape"
+  },
+  "pregame-huddle": {
+    "alt": "BVN players huddle with arms raised before the first serve",
+    "width": 3456,
+    "height": 2304,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "45% 60%",
+    "group": "season",
+    "orientation": "landscape"
+  },
+  "pregame-handshake": {
+    "alt": "BVN players shake hands with opponents before a match",
+    "width": 3456,
+    "height": 2304,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "55% 50%",
+    "group": "season",
+    "orientation": "landscape"
+  },
+  "attack-at-the-antenna": {
+    "alt": "BVN No. 16 attacks at the antenna in a packed gym",
+    "width": 3456,
+    "height": 2304,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "75% 40%",
+    "group": "season",
+    "orientation": "landscape"
+  }
+}

@@ -1,0 +1,35 @@
+---
+import photos from '../data/photos.json';
+import { url } from '../lib/site';
+
+type Slug = keyof typeof photos;
+
+interface Props {
+  slug: Slug;
+  sizes?: string;
+  class?: string;
+  eager?: boolean;
+  /** Override the stored focal point, e.g. "50% 20%". */
+  focal?: string;
+}
+
+const { slug, sizes = '100vw', class: className, eager = false, focal } = Astro.props;
+const photo = photos[slug];
+const file = (w: number) => url(`/photos/bvn-volleyball-${slug}-${w}.webp`);
+const srcset = photo.widths.map((w) => `${file(w)} ${w}w`).join(', ');
+const fallback = photo.widths[Math.min(1, photo.widths.length - 1)];
+---
+
+<img
+  src={file(fallback)}
+  srcset={srcset}
+  sizes={sizes}
+  width={photo.width}
+  height={photo.height}
+  alt={photo.alt}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding={eager ? 'sync' : 'async'}
+  fetchpriority={eager ? 'high' : undefined}
+  class={className}
+  style={`object-position: ${focal ?? photo.focal}`}
+/>

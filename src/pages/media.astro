@@ -1,0 +1,253 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import photos from '../data/photos.json';
+import { team } from '../data/team';
+import { url } from '../lib/site';
+
+type Slug = keyof typeof photos;
+const all = Object.keys(photos) as Slug[];
+const groups = [
+  { id: 'state', title: '2026 State Tournament', slugs: all.filter((s) => photos[s].group === 'state') },
+  { id: 'season', title: '2026 Season', slugs: all.filter((s) => photos[s].group === 'season') },
+];
+const large = (s: Slug) => {
+  const w = photos[s].widths;
+  return url(`/photos/bvn-volleyball-${s}-${w[w.length - 1]}.webp`);
+};
+---
+
+<Base
+  title="Photo Gallery"
+  description="Photos of Blue Valley North Men's Volleyball from the 2026 season and the state tournament: match action, huddles and team moments."
+  path="/media/"
+>
+  <PageHero
+    title="Media"
+    intro="Match action, huddles and team moments from the 2026 season and the state tournament."
+    photo="state-tournament-celebration"
+    focal="60% 45%"
+  />
+
+  {
+    groups.map((g) => (
+      <section class="section" aria-labelledby={`${g.id}-title`}>
+        <div class="wrap">
+          <div class="g-head">
+            <h2 id={`${g.id}-title`} class="display h-md">
+              {g.title}
+            </h2>
+            <span class="count">{g.slugs.length} photos</span>
+          </div>
+          <ul class="masonry">
+            {g.slugs.map((s) => (
+              <li>
+                <button
+                  type="button"
+                  class="tile"
+                  data-full={large(s)}
+                  data-alt={photos[s].alt}
+                  data-w={photos[s].width}
+                  data-h={photos[s].height}
+                  aria-label={`View larger: ${photos[s].alt}`}
+                >
+                  <Photo slug={s} sizes="(min-width: 1100px) 33vw, (min-width: 640px) 50vw, 100vw" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="section more">
+    <div class="wrap more-inner">
+      <p class="lede">More photos and match-day posts are on the team Instagram.</p>
+      <a class="btn btn-primary" href={team.instagram} rel="noopener" target="_blank">
+        <Icon name="instagram" size={18} />
+        {team.instagramHandle}
+      </a>
+    </div>
+  </section>
+
+  <dialog class="lightbox" aria-label="Photo viewer">
+    <div class="lb-frame">
+      <img class="lb-img" alt="" />
+      <p class="lb-cap"></p>
+    </div>
+    <button type="button" class="lb-btn lb-close" aria-label="Close"><Icon name="x" size={24} /></button>
+    <button type="button" class="lb-btn lb-prev" aria-label="Previous photo"><Icon name="caretLeft" size={26} /></button>
+    <button type="button" class="lb-btn lb-next" aria-label="Next photo"><Icon name="caretRight" size={26} /></button>
+  </dialog>
+</Base>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('.lightbox');
+  const tiles = Array.from(document.querySelectorAll<HTMLButtonElement>('.tile'));
+  if (dialog && tiles.length) {
+    const img = dialog.querySelector<HTMLImageElement>('.lb-img')!;
+    const cap = dialog.querySelector<HTMLParagraphElement>('.lb-cap')!;
+    let index = 0;
+    let opener: HTMLButtonElement | null = null;
+
+    const show = (i: number) => {
+      index = (i + tiles.length) % tiles.length;
+      const t = tiles[index];
+      img.src = t.dataset.full!;
+      img.alt = t.dataset.alt!;
+      img.width = Number(t.dataset.w);
+      img.height = Number(t.dataset.h);
+      cap.textContent = t.dataset.alt!;
+    };
+
+    tiles.forEach((t, i) =>
+      t.addEventListener('click', () => {
+        opener = t;
+        show(i);
+        dialog.showModal();
+      }),
+    );
+    dialog.querySelector('.lb-close')!.addEventListener('click', () => dialog.close());
+    dialog.querySelector('.lb-prev')!.addEventListener('click', () => show(index - 1));
+    dialog.querySelector('.lb-next')!.addEventListener('click', () => show(index + 1));
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(index - 1);
+      if (e.key === 'ArrowRight') show(index + 1);
+    });
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => opener?.focus());
+  }
+</script>
+
+<style>
+  .g-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .count {
+    color: var(--muted);
+    font-size: 0.9375rem;
+    white-space: nowrap;
+  }
+  .masonry {
+    columns: 3 320px;
+    column-gap: 12px;
+  }
+  .masonry li {
+    break-inside: avoid;
+    margin-bottom: 12px;
+  }
+  .tile {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: var(--surface-2);
+    cursor: zoom-in;
+    overflow: hidden;
+  }
+  .tile :global(img) {
+    width: 100%;
+    transition:
+      transform 0.5s var(--ease),
+      opacity 0.3s var(--ease);
+  }
+  .tile:hover :global(img) {
+    transform: scale(1.02);
+  }
+  .more {
+    background: var(--surface);
+  }
+  .more-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .lightbox {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgb(6 16 36 / 0.96);
+    color: #f3f5f8;
+  }
+  .lightbox::backdrop {
+    background: rgb(6 16 36 / 0.7);
+  }
+  .lb-frame {
+    position: absolute;
+    inset: 64px 72px 24px;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 14px;
+    place-items: center;
+  }
+  .lb-img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    object-fit: contain;
+  }
+  .lb-cap {
+    font-size: 0.9375rem;
+    color: rgb(243 245 248 / 0.8);
+    text-align: center;
+    max-width: 70ch;
+  }
+  .lb-btn {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    background: rgb(243 245 248 / 0.08);
+    border: 1px solid rgb(243 245 248 / 0.3);
+    color: #f3f5f8;
+    cursor: pointer;
+  }
+  .lb-btn:hover {
+    background: rgb(243 245 248 / 0.18);
+  }
+  .lb-close {
+    top: 12px;
+    right: 12px;
+  }
+  .lb-prev {
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .lb-next {
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  @media (max-width: 639px) {
+    .lb-frame {
+      inset: 64px 12px 84px;
+    }
+    .lb-prev,
+    .lb-next {
+      top: auto;
+      bottom: 16px;
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+import Icon from './Icon.astro';
+import Wordmark from './Wordmark.astro';
+import { team } from '../data/team';
+import { url } from '../lib/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap grid">
+    <div class="id">
+      <a href={url('/')} class="brand" aria-label={`${team.name} home`}><Wordmark size="lg" /></a>
+      <p class="where">{team.mascot}. {team.city}.</p>
+    </div>
+
+    <nav aria-label="Footer">
+      <h2 class="label">Site</h2>
+      <ul>
+        <li><a href={url('/schedule/')}>Schedule and results</a></li>
+        <li><a href={url('/roster/')}>Roster</a></li>
+        <li><a href={url('/program/')}>Program</a></li>
+        <li><a href={url('/media/')}>Media</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="label">Follow</h2>
+      <ul>
+        <li>
+          <a href={team.instagram} rel="noopener" target="_blank">
+            <Icon name="instagram" size={18} />
+            Instagram {team.instagramHandle}
+          </a>
+        </li>
+        <li>
+          <a href={team.band} rel="noopener" target="_blank">
+            <Icon name="arrowUpRight" size={18} />
+            Team BAND
+          </a>
+        </li>
+        <li>
+          <a href={team.league.url} rel="noopener" target="_blank">
+            <Icon name="arrowUpRight" size={18} />
+            {team.league.name} league
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="legal">
+      <p>
+        Blue Valley North Men's Volleyball is an independent program. The team and this website are not affiliated with
+        or endorsed by Blue Valley North High School or Blue Valley Schools.
+      </p>
+      <p>&copy; {year} {team.name}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+    padding-top: clamp(48px, 6vw, 80px);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 40px;
+  }
+  .brand {
+    text-decoration: none;
+  }
+  .where {
+    margin-top: 16px;
+    color: var(--muted);
+  }
+  .label {
+    margin-bottom: 14px;
+  }
+  ul {
+    display: grid;
+    gap: 10px;
+  }
+  ul a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+  ul a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal {
+    margin-top: clamp(40px, 5vw, 64px);
+    padding-block: 24px 32px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .legal p:first-child {
+    max-width: 70ch;
+  }
+  @media (max-width: 767px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .legal {
+      flex-direction: column;
+    }
+  }
+</style>

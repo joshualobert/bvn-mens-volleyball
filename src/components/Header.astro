@@ -1,0 +1,231 @@
+---
+import Icon from './Icon.astro';
+import Wordmark from './Wordmark.astro';
+import { team } from '../data/team';
+import { url } from '../lib/site';
+
+interface Props {
+  path: string;
+}
+
+const { path } = Astro.props;
+const nav = [
+  { href: '/schedule/', label: 'Schedule' },
+  { href: '/roster/', label: 'Roster' },
+  { href: '/program/', label: 'Program' },
+  { href: '/media/', label: 'Media' },
+];
+---
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href={url('/')} aria-label={`${team.name} home`}>
+      <Wordmark />
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={url(item.href)} aria-current={path === item.href ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a class="ig" href={team.instagram} rel="noopener" target="_blank">
+      <Icon name="instagram" size={20} />
+      <span class="ig-text">{team.instagramHandle}</span>
+      <span class="sr-only">(opens Instagram in a new tab)</span>
+    </a>
+
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="open"><Icon name="list" size={24} /></span>
+      <span class="close"><Icon name="x" size={24} /></span>
+      <span class="sr-only">Menu</span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <ul class="wrap">
+      <li><a href={url('/')} aria-current={path === '/' ? 'page' : undefined}>Home</a></li>
+      {
+        nav.map((item) => (
+          <li>
+            <a href={url(item.href)} aria-current={path === item.href ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href={team.instagram} rel="noopener" target="_blank" class="mobile-ig">
+          <Icon name="instagram" size={22} />
+          {team.instagramHandle}
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  if (btn && menu) {
+    const setOpen = (open: boolean) => {
+      btn.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+      document.documentElement.classList.toggle('menu-open', open);
+    };
+    btn.addEventListener('click', () => setOpen(menu.hidden));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.hidden) {
+        setOpen(false);
+        btn.focus();
+      }
+    });
+    matchMedia('(min-width: 900px)').addEventListener('change', (e) => e.matches && setOpen(false));
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar {
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .brand {
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .nav ul {
+    display: flex;
+    gap: 4px;
+  }
+  .nav a {
+    display: block;
+    padding: 10px 14px;
+    font-weight: 650;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-2);
+    position: relative;
+  }
+  .nav a::after {
+    content: '';
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 2px;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s var(--ease);
+  }
+  .nav a:hover {
+    color: var(--ink);
+  }
+  .nav a:hover::after,
+  .nav a[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+  .nav a[aria-current='page'] {
+    color: var(--ink);
+  }
+  .ig {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    font-weight: 650;
+    text-decoration: none;
+    color: var(--ink-2);
+    padding: 8px 0;
+  }
+  .ig:hover {
+    color: var(--ink);
+  }
+  .menu-btn {
+    display: none;
+    background: none;
+    border: 1px solid var(--line-strong);
+    color: var(--ink);
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    cursor: pointer;
+  }
+  .menu-btn .close,
+  .menu-btn[aria-expanded='true'] .open {
+    display: none;
+  }
+  .menu-btn[aria-expanded='true'] .close {
+    display: block;
+  }
+  .mobile-menu {
+    border-top: 1px solid var(--line);
+    background: var(--bg);
+    height: calc(100dvh - var(--header-h));
+    overflow-y: auto;
+  }
+  .mobile-menu ul {
+    padding-block: 16px 40px;
+  }
+  .mobile-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-stretch: 72%;
+    font-weight: 820;
+    font-size: 2rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    line-height: 1.1;
+  }
+  .mobile-menu a[aria-current='page'] {
+    color: var(--accent);
+  }
+  .mobile-menu .mobile-ig {
+    font-stretch: 100%;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: none;
+    border-bottom: 0;
+    padding-top: 24px;
+    color: var(--ink-2);
+  }
+  @media (max-width: 1023px) {
+    .ig-text {
+      display: none;
+    }
+  }
+  @media (max-width: 899px) {
+    .nav,
+    .ig {
+      display: none;
+    }
+    .menu-btn {
+      display: grid;
+    }
+  }
+  :global(html.menu-open) {
+    overflow: hidden;
+  }
+</style>

@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import { url } from '../lib/site';
+---
+
+<Base
+  title="Page not found"
+  description="This page could not be found on the Blue Valley North Men's Volleyball website."
+  path="/404/"
+  noindex
+>
+  <section class="nf">
+    <div class="wrap nf-grid">
+      <div class="nf-copy">
+        <p class="display code">404</p>
+        <h1 class="display h-lg">Out of bounds</h1>
+        <p class="lede">That page does not exist or has moved. Head back to the homepage or check the schedule.</p>
+        <div class="links">
+          <a class="btn btn-primary" href={url('/')}>Homepage <Icon name="arrowRight" size={18} /></a>
+          <a class="btn btn-secondary" href={url('/schedule/')}>Schedule</a>
+        </div>
+      </div>
+      <figure class="nf-photo">
+        <Photo slug="libero-number-3" sizes="(min-width: 900px) 34vw, 100vw" class="photo-fill" />
+      </figure>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    padding-block: clamp(56px, 8vw, 112px);
+  }
+  .nf-grid {
+    display: grid;
+    grid-template-columns: 7fr 4fr;
+    gap: clamp(32px, 6vw, 96px);
+    align-items: center;
+  }
+  .nf-copy {
+    display: grid;
+    gap: 22px;
+    justify-items: start;
+  }
+  .code {
+    font-size: clamp(5rem, 14vw, 11rem);
+    color: var(--accent);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .nf-photo {
+    aspect-ratio: 4 / 5;
+  }
+  @media (max-width: 767px) {
+    .nf-grid {
+      grid-template-columns: 1fr;
+    }
+    .nf-photo {
+      aspect-ratio: 3 / 2;
+    }
+  }
+</style>

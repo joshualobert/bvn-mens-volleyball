@@ -1,0 +1,244 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import { team, seasons } from '../data/team';
+
+const v25 = seasons.find((s) => s.year === 2025 && s.level === 'Varsity')!;
+const v26 = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
+---
+
+<Base
+  title="The Program"
+  description="About Blue Valley North Men's Volleyball: the BVN Boys Volleyball program, its league, its rise from 2025 to a 2026 state third-place finish, and how to get involved."
+  path="/program/"
+>
+  <PageHero
+    title="The Program"
+    intro="Varsity and JV boys volleyball from Overland Park, competing in the KC Boys Volleyball high school league."
+    photo="huddle-hands-raised"
+    focal="50% 60%"
+  />
+
+  <section class="section" aria-labelledby="about-title">
+    <div class="wrap about">
+      <h2 id="about-title" class="display h-lg">About the program</h2>
+      <div class="prose about-copy">
+        <p>
+          Blue Valley North Men's Volleyball fields a varsity team and a junior varsity team, with a group of players who
+          move between the two. The 2026 roster carried 21 players.
+        </p>
+        <p>
+          Boys volleyball is not currently sanctioned by KSHSAA in Kansas, so high school teams compete in the
+          <a href={team.league.url} rel="noopener" target="_blank">{team.league.name}</a> league. The league season is
+          built around match days against two opponents and finishes with a state tournament and a Final Four.
+        </p>
+        <p>
+          The program is run independently. It carries the Blue Valley North name and Mustangs identity but is not
+          affiliated with or endorsed by the school.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section climb" aria-labelledby="climb-title">
+    <div class="wrap">
+      <h2 id="climb-title" class="display h-lg">One season, nine places</h2>
+      <p class="lede climb-lede">
+        In 2025 the varsity finished 14th of 24 in the league standings. A year later it finished 5th of 29 and took
+        third at state.
+      </p>
+      <div class="years">
+        <div class="year">
+          <span class="y-label display">{v25.year}</span>
+          <dl>
+            <div><dt>Matches</dt><dd>{v25.wins}-{v25.losses}</dd></div>
+            <div><dt>Sets</dt><dd>{v25.setWins}-{v25.setLosses}</dd></div>
+            <div><dt>League rank</dt><dd>{v25.rank} of {v25.teams}</dd></div>
+          </dl>
+        </div>
+        <div class="year current">
+          <span class="y-label display">{v26.year}</span>
+          <dl>
+            <div><dt>Matches</dt><dd>{v26.wins}-{v26.losses}</dd></div>
+            <div><dt>Sets</dt><dd>{v26.setWins}-{v26.setLosses}</dd></div>
+            <div><dt>League rank</dt><dd>{v26.rank} of {v26.teams}</dd></div>
+            <div><dt>State</dt><dd>Third place</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery-band" aria-label="Team photos">
+    <div class="band-grid">
+      <Photo slug="team-circle" sizes="(min-width: 900px) 40vw, 100vw" class="photo-fill b1" />
+      <Photo slug="timeout-with-coach" sizes="(min-width: 900px) 30vw, 50vw" class="photo-fill b2" />
+      <Photo slug="pregame-handshake" sizes="(min-width: 900px) 30vw, 50vw" class="photo-fill b3" />
+      <Photo slug="teammates-on-court" sizes="(min-width: 900px) 30vw, 50vw" class="photo-fill b4" />
+      <Photo slug="libero-walk-on" sizes="(min-width: 900px) 30vw, 50vw" class="photo-fill b5" />
+    </div>
+  </section>
+
+  <section class="section join" aria-labelledby="join-title">
+    <div class="wrap join-grid">
+      <h2 id="join-title" class="display h-lg">Get involved</h2>
+      <div class="paths">
+        <div class="path">
+          <h3 class="display h-md">Players</h3>
+          <p>Interested in trying out or learning more about the program? Send the team a message on Instagram.</p>
+          <a class="arrow-link" href={team.instagram} rel="noopener" target="_blank">
+            Message {team.instagramHandle} <Icon name="arrowUpRight" size={18} />
+          </a>
+        </div>
+        <div class="path">
+          <h3 class="display h-md">Families</h3>
+          <p>Team updates for players and families are shared through the team BAND group.</p>
+          <a class="arrow-link" href={team.band} rel="noopener" target="_blank">
+            Team BAND <Icon name="arrowUpRight" size={18} />
+          </a>
+        </div>
+        <div class="path">
+          <h3 class="display h-md">Fans</h3>
+          <p>Match days, results and photos are posted on Instagram throughout the season.</p>
+          <a class="arrow-link" href={team.instagram} rel="noopener" target="_blank">
+            Follow on Instagram <Icon name="arrowUpRight" size={18} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+  .about-copy {
+    font-size: 1.125rem;
+  }
+  .climb {
+    background: var(--surface);
+  }
+  .climb-lede {
+    margin-top: 20px;
+  }
+  .years {
+    margin-top: clamp(36px, 5vw, 64px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 2px solid var(--ink);
+  }
+  .year {
+    padding: 28px 32px 8px 0;
+    display: grid;
+    gap: 20px;
+    align-content: start;
+  }
+  .year + .year {
+    padding-left: 32px;
+    border-left: 1px solid var(--line);
+  }
+  .y-label {
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    color: var(--muted);
+  }
+  .current .y-label {
+    color: var(--accent);
+  }
+  .year dl {
+    display: grid;
+    gap: 0;
+  }
+  .year dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .year dt {
+    color: var(--muted);
+  }
+  .year dd {
+    font-weight: 750;
+    font-size: 1.125rem;
+  }
+  .band-grid {
+    display: grid;
+    grid-template-columns: 4fr 3fr 3fr;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    height: clamp(420px, 50vw, 680px);
+  }
+  .band-grid :global(.b1) {
+    grid-row: 1 / span 2;
+  }
+  .join-grid {
+    display: grid;
+    gap: clamp(32px, 4vw, 48px);
+  }
+  .paths {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 2px solid var(--ink);
+  }
+  .path {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+    justify-items: start;
+    padding: 28px 28px 8px 0;
+    color: var(--ink-2);
+  }
+  .path + .path {
+    padding-left: 28px;
+    border-left: 1px solid var(--line);
+  }
+  .path h3 {
+    color: var(--ink);
+  }
+  @media (max-width: 899px) {
+    .about,
+    .years {
+      grid-template-columns: 1fr;
+    }
+    .year,
+    .year + .year {
+      padding: 24px 0 8px;
+      border-left: 0;
+    }
+    .year + .year {
+      border-top: 1px solid var(--line);
+    }
+    .band-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      height: auto;
+    }
+    .band-grid :global(.b1) {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      aspect-ratio: 3 / 2;
+    }
+    .band-grid :global(.b2),
+    .band-grid :global(.b3),
+    .band-grid :global(.b4),
+    .band-grid :global(.b5) {
+      aspect-ratio: 1 / 1;
+    }
+    .paths {
+      grid-template-columns: 1fr;
+    }
+    .path,
+    .path + .path {
+      padding: 24px 0;
+      border-left: 0;
+      border-bottom: 1px solid var(--line);
+    }
+  }
+</style>
