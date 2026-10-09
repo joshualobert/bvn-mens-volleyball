@@ -46,6 +46,7 @@ const structuredData = {
     <link rel="canonical" href={canonical} />
     {noindex ? <meta name="robots" content="noindex" /> : <meta name="robots" content="index, follow" />}
 
+    {team.googleSiteVerification && <meta name="google-site-verification" content={team.googleSiteVerification} />}
     <meta name="theme-color" content="#0a1a36" />
     <link rel="icon" href={url("/favicon.ico")} sizes="any" />
     <link rel="icon" href={url("/favicon-32.png")} sizes="32x32" type="image/png" />

@@ -10,6 +10,9 @@ export const team = {
   instagramHandle: '@bvnorthmvb',
   // Team BAND link published in the @bvnorthmvb Instagram bio
   band: 'https://band.us/n/a8a0b6IbObc6S',
+  // Google Search Console "HTML tag" verification code: paste only the value of
+  // the content="..." attribute. Leave empty to omit the tag.
+  googleSiteVerification: '',
   league: {
     name: 'KC Boys Volleyball',
     url: 'https://kcboysvb.org/',
