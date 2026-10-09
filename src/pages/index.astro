@@ -4,6 +4,7 @@ import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import { team, roster, varsitySchedule, postseason, seasons, positionNames } from '../data/team';
 import { url, dateParts } from '../lib/site';
+import heroPreview from '../data/hero-lqip.txt?raw';
 
 const varsity = roster.groups.find((g) => g.id === 'varsity')!;
 const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
@@ -14,7 +15,7 @@ const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
   description="Blue Valley North Men's Volleyball (BVN Boys Volleyball) from Overland Park, Kansas. Third place at the 2026 state championship. Roster, schedule, results and photos."
   path="/"
 >
-  <section class="hero on-photo" aria-labelledby="hero-title">
+  <section class="hero on-photo" aria-labelledby="hero-title" style={`--hero-preview: url(${heroPreview.trim()})`}>
     <Photo slug="attack-over-the-block" eager sizes="100vw" class="hero-img" focal="30% 12%" />
     <div class="hero-scrim" aria-hidden="true"></div>
     <div class="wrap hero-inner">
@@ -193,7 +194,7 @@ const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
     display: grid;
     align-items: end;
     color: #f3f5f8;
-    background: var(--navy-950);
+    background: var(--navy-950) var(--hero-preview) 30% 12% / cover no-repeat;
     overflow: hidden;
   }
   .hero :global(.hero-img) {
