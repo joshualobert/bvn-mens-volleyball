@@ -88,7 +88,7 @@ def main():
     hero = load(PHOTOS[0][0], originals, raws, False)
     w, h = hero.size
     th = round(w * 630 / 1200)
-    top = max(0, round(h * 0.18))
+    top = max(0, round(h * 0.03))
     og = hero.crop((0, top, w, min(h, top + th))).resize((1200, 630), Image.LANCZOS)
     og.save(os.path.join(ROOT, "public", "og-image.jpg"), "JPEG", quality=84, optimize=True, progressive=True)
 
