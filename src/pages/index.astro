@@ -26,10 +26,8 @@ const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
         Mustangs boys volleyball from Overland Park, Kansas. Third place at the 2026 state championship.
       </p>
       <div class="hero-ctas rise rise-3">
-        <a class="btn btn-primary" href={url('/schedule/')}>2026 Results <Icon name="arrowRight" size={18} /></a>
-        <a class="btn btn-secondary" href={team.instagram} rel="noopener" target="_blank">
-          <Icon name="instagram" size={18} /> Instagram
-        </a>
+        <a class="btn btn-primary" href={url('/schedule/')}>Schedule <Icon name="arrowRight" size={18} /></a>
+        <a class="btn btn-secondary" href={url('/roster/')}>Roster</a>
       </div>
     </div>
   </section>
@@ -117,7 +115,7 @@ const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
           ))
         }
       </ul>
-      <a class="arrow-link" href={url('/roster/')}>Full roster <Icon name="arrowRight" size={18} /></a>
+      <a class="arrow-link" href={url('/roster/')}>Roster <Icon name="arrowRight" size={18} /></a>
     </div>
   </section>
 
@@ -129,7 +127,7 @@ const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
           Six regular season match days, each against two opponents, followed by the state tournament on May 2 and the
           Final Four on May 5. The 2027 schedule will be posted here and on Instagram once it is released.
         </p>
-        <a class="arrow-link" href={url('/schedule/')}>Schedule and results <Icon name="arrowRight" size={18} /></a>
+        <a class="arrow-link" href={url('/schedule/')}>Schedule <Icon name="arrowRight" size={18} /></a>
       </div>
       <ol class="days">
         {
