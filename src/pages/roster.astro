@@ -144,7 +144,10 @@ const fullPositions = (ps?: Position[]) => ps?.map((p) => positionNames[p]).join
     color: var(--accent-ink);
   }
   .n {
-    opacity: 0.65;
+    color: var(--muted);
+  }
+  .tabs button[aria-selected='true'] .n {
+    color: var(--accent-ink);
   }
   .thead,
   .tbody li {
