@@ -104,6 +104,44 @@
     "group": "state",
     "orientation": "landscape"
   },
+  "state-tournament-team-celebration": {
+    "alt": "BVN players celebrate together on court during the 2026 state tournament",
+    "width": 3000,
+    "height": 2000,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "55% 45%",
+    "group": "state",
+    "orientation": "landscape"
+  },
+  "state-tournament-team-photo": {
+    "alt": "The team poses with their coach on state tournament day",
+    "width": 1170,
+    "height": 1143,
+    "widths": [
+      480,
+      960
+    ],
+    "focal": "50% 45%",
+    "group": "state",
+    "orientation": "landscape"
+  },
+  "state-tournament-dig": {
+    "alt": "A BVN defender digs a hard-driven ball at the state tournament",
+    "width": 3000,
+    "height": 2000,
+    "widths": [
+      480,
+      960,
+      1600
+    ],
+    "focal": "40% 50%",
+    "group": "state",
+    "orientation": "landscape"
+  },
   "spike-at-the-net": {
     "alt": "A BVN outside hitter attacks the ball high above the net",
     "width": 3456,

@@ -171,13 +171,19 @@ const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
       <div>
         <h2 id="follow-title" class="display h-lg">Follow the Mustangs</h2>
         <p class="lede">
-          Match days, results and photos go up first on the team Instagram. Prospective players and families can reach
-          the team there too.
+          Match days, results and photos go up first on the team Instagram, and full game film is on YouTube.
+          Prospective players and families can reach the team on Instagram.
         </p>
-        <a class="btn btn-primary" href={team.instagram} rel="noopener" target="_blank">
-          <Icon name="instagram" size={18} />
-          {team.instagramHandle}
-        </a>
+        <div class="follow-ctas">
+          <a class="btn btn-primary" href={team.instagram} rel="noopener" target="_blank">
+            <Icon name="instagram" size={18} />
+            {team.instagramHandle}
+          </a>
+          <a class="btn btn-secondary" href={url('/media/#film')}>
+            <Icon name="youtube" size={18} />
+            Game film
+          </a>
+        </div>
       </div>
       <figure class="follow-photo">
         <Photo slug="bench-applause" sizes="(min-width: 900px) 34vw, 100vw" class="photo-fill" />
@@ -476,6 +482,11 @@ const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
     display: grid;
     gap: 24px;
     justify-items: start;
+  }
+  .follow-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
   }
   .follow-photo {
     aspect-ratio: 4 / 5;

@@ -8,6 +8,8 @@ export const team = {
   city: 'Overland Park, Kansas',
   instagram: 'https://www.instagram.com/bvnorthmvb/',
   instagramHandle: '@bvnorthmvb',
+  youtube: 'https://www.youtube.com/@Bvnmvb',
+  youtubeVideos: 'https://www.youtube.com/@Bvnmvb/videos',
   // Team BAND link published in the @bvnorthmvb Instagram bio
   band: 'https://band.us/n/a8a0b6IbObc6S',
   // Google Search Console "HTML tag" verification code: paste only the value of
@@ -162,4 +164,16 @@ export const seasons = [
     rank: 14,
     teams: 24,
   },
+];
+
+// Source: Blue Valley North Men's Volleyball YouTube channel (@Bvnmvb).
+// Titles follow the channel, lightly tidied. The first entry is featured.
+export const gameFilm: { id: string; title: string; length: string }[] = [
+  { id: 'kI9fXOlNucI', title: 'State Semifinals: BVN vs KC East', length: '1:09:06' },
+  { id: '6yp9Jw_bU1Q', title: 'BVN vs Aquinas', length: '1:11:45' },
+  { id: '2cABLNUUYMg', title: 'BVN vs BVW', length: '1:01:50' },
+  { id: 'HSFgaR-jGxA', title: 'BVN vs KC East', length: '1:14:41' },
+  { id: '2ck-urbAXJk', title: 'BVN vs BV High', length: '1:20:36' },
+  { id: 'TenE4fWu0SA', title: 'BVN vs Olathe South', length: '1:05:52' },
+  { id: '_72dvUv-hOs', title: 'BVN vs Lawrence Free State', length: '42:50' },
 ];
