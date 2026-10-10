@@ -12,9 +12,11 @@ interface Props {
   path: string;
   image?: string;
   noindex?: boolean;
+  /** Header floats over a full-bleed photo at the top of the page. */
+  overlay?: boolean;
 }
 
-const { title, description, path, image = '/og-image.jpg', noindex = false } = Astro.props;
+const { title, description, path, image = '/og-image.jpg', noindex = false, overlay = true } = Astro.props;
 const canonical = absolute(path);
 const ogImage = absolute(image);
 const fullTitle = path === '/' ? title : `${title} | ${team.name}`;
@@ -47,7 +49,7 @@ const structuredData = {
     {noindex ? <meta name="robots" content="noindex" /> : <meta name="robots" content="index, follow" />}
 
     {team.googleSiteVerification && <meta name="google-site-verification" content={team.googleSiteVerification} />}
-    <meta name="theme-color" content="#0a1a36" />
+    <meta name="theme-color" content="#050b18" />
     <link rel="icon" href={url("/favicon.ico")} sizes="any" />
     <link rel="icon" href={url("/favicon-32.png")} sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
@@ -68,15 +70,53 @@ const structuredData = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <slot name="head" />
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Header path={path} />
+    <Header path={path} overlay={overlay} />
     <main id="main">
       <slot />
     </main>
     <Footer />
+    <script>
+      // Scroll reveal: fade sections in once as they enter the viewport.
+      const reveal = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-in');
+              reveal.unobserve(e.target);
+            }
+          }),
+        { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+      );
+      document.querySelectorAll('[data-reveal]').forEach((el) => reveal.observe(el));
+
+      // Count-up for stat numbers marked data-count="16" (honours reduced motion).
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const counters = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            counters.unobserve(e.target);
+            const el = e.target as HTMLElement;
+            const end = Number(el.dataset.count);
+            if (reduce || !Number.isFinite(end)) return;
+            const start = performance.now();
+            const dur = 900;
+            const tick = (t: number) => {
+              const p = Math.min(1, (t - start) / dur);
+              el.textContent = String(Math.round(end * (1 - Math.pow(1 - p, 3))));
+              if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          }),
+        { threshold: 0.6 },
+      );
+      document.querySelectorAll('[data-count]').forEach((el) => counters.observe(el));
+    </script>
   </body>
 </html>

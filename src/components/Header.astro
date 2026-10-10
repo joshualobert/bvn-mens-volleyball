@@ -6,9 +6,10 @@ import { url } from '../lib/site';
 
 interface Props {
   path: string;
+  overlay?: boolean;
 }
 
-const { path } = Astro.props;
+const { path, overlay = true } = Astro.props;
 const nav = [
   { href: '/schedule/', label: 'Schedule' },
   { href: '/roster/', label: 'Roster' },
@@ -17,7 +18,7 @@ const nav = [
 ];
 ---
 
-<header class="site-header">
+<header class:list={['site-header', { overlay }]} data-header>
   <div class="wrap bar">
     <a class="brand" href={url('/')}>
       <Wordmark />
@@ -34,18 +35,24 @@ const nav = [
             </li>
           ))
         }
+        <li>
+          <a href={team.youtube} rel="noopener" target="_blank" class="ext">
+            Film <Icon name="arrowUpRight" size={14} />
+            <span class="sr-only">(opens YouTube in a new tab)</span>
+          </a>
+        </li>
       </ul>
     </nav>
 
     <a class="ig" href={team.instagram} rel="noopener" target="_blank">
-      <Icon name="instagram" size={20} />
+      <Icon name="instagram" size={18} />
       <span class="ig-text">{team.instagramHandle}</span>
       <span class="sr-only">(opens Instagram in a new tab)</span>
     </a>
 
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu">
-      <span class="open"><Icon name="list" size={24} /></span>
-      <span class="close"><Icon name="x" size={24} /></span>
+      <span class="open"><Icon name="list" size={22} /></span>
+      <span class="close"><Icon name="x" size={22} /></span>
       <span class="sr-only">Menu</span>
     </button>
   </div>
@@ -63,23 +70,40 @@ const nav = [
         ))
       }
       <li>
+        <a href={team.youtube} rel="noopener" target="_blank">
+          Film <Icon name="arrowUpRight" size={22} />
+        </a>
+      </li>
+      <li>
         <a href={team.instagram} rel="noopener" target="_blank" class="mobile-ig">
-          <Icon name="instagram" size={22} />
+          <Icon name="instagram" size={20} />
           {team.instagramHandle}
         </a>
       </li>
     </ul>
   </div>
 </header>
+<div class="header-sentinel" data-header-sentinel aria-hidden="true"></div>
 
 <script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
   const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
   const menu = document.getElementById('mobile-menu');
-  if (btn && menu) {
+
+  // Solid header once the top of the page (the hero) scrolls away.
+  const sentinel = document.querySelector('[data-header-sentinel]');
+  if (header && sentinel) {
+    new IntersectionObserver(([e]) => header.classList.toggle('is-solid', !e.isIntersecting), {
+      rootMargin: '0px 0px 0px 0px',
+    }).observe(sentinel);
+  }
+
+  if (btn && menu && header) {
     const setOpen = (open: boolean) => {
       btn.setAttribute('aria-expanded', String(open));
       menu.hidden = !open;
-      document.documentElement.classList.toggle('menu-open', open);
+      header.classList.toggle('menu-open', open);
+      document.documentElement.classList.toggle('no-scroll', open);
     };
     btn.addEventListener('click', () => setOpen(menu.hidden));
     document.addEventListener('keydown', (e) => {
@@ -88,7 +112,7 @@ const nav = [
         btn.focus();
       }
     });
-    matchMedia('(min-width: 900px)').addEventListener('change', (e) => e.matches && setOpen(false));
+    matchMedia('(min-width: 960px)').addEventListener('change', (e) => e.matches && setOpen(false));
   }
 </script>
 
@@ -97,14 +121,37 @@ const nav = [
     position: sticky;
     top: 0;
     z-index: 50;
-    background: var(--bg);
+    background: rgb(5 11 24 / 0.82);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
     border-bottom: 1px solid var(--line);
+    transition:
+      background-color 0.35s var(--ease),
+      border-color 0.35s var(--ease);
+  }
+  /* Over a hero photo: transparent until scrolled */
+  .site-header.overlay {
+    margin-bottom: calc(-1 * var(--header-h));
+  }
+  .site-header.overlay:not(.is-solid):not(.menu-open) {
+    background: linear-gradient(to bottom, rgb(4 10 23 / 0.7), rgb(4 10 23 / 0));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom-color: transparent;
+  }
+  .header-sentinel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 70vh;
+    pointer-events: none;
   }
   .bar {
     height: var(--header-h);
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 28px;
   }
   .brand {
     text-decoration: none;
@@ -112,61 +159,73 @@ const nav = [
   }
   .nav ul {
     display: flex;
-    gap: 4px;
+    gap: 2px;
   }
   .nav a {
-    display: block;
-    padding: 10px 14px;
-    font-weight: 650;
-    font-size: 0.875rem;
-    letter-spacing: 0.08em;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: var(--header-h);
+    padding: 0 14px;
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
     color: var(--ink-2);
     position: relative;
+    transition: color 0.2s var(--ease);
   }
   .nav a::after {
     content: '';
     position: absolute;
     left: 14px;
     right: 14px;
-    bottom: 2px;
+    bottom: -1px;
     height: 2px;
     background: var(--accent);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.25s var(--ease);
+    transition: transform 0.3s var(--ease);
   }
-  .nav a:hover {
+  .nav a:hover,
+  .nav a[aria-current='page'] {
     color: var(--ink);
   }
   .nav a:hover::after,
   .nav a[aria-current='page']::after {
     transform: scaleX(1);
   }
-  .nav a[aria-current='page'] {
-    color: var(--ink);
+  .nav .ext :global(.icon) {
+    color: var(--accent);
   }
   .ig {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.875rem;
-    font-weight: 650;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
     text-decoration: none;
     color: var(--ink-2);
-    padding: 8px 0;
+    padding: 8px 12px;
+    border: 1px solid var(--line-strong);
+    transition:
+      border-color 0.2s var(--ease),
+      color 0.2s var(--ease);
   }
   .ig:hover {
     color: var(--ink);
+    border-color: var(--ink);
   }
   .menu-btn {
     display: none;
-    background: none;
+    background: rgb(5 11 24 / 0.4);
     border: 1px solid var(--line-strong);
     color: var(--ink);
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     place-items: center;
     cursor: pointer;
   }
@@ -179,44 +238,47 @@ const nav = [
   }
   .mobile-menu {
     border-top: 1px solid var(--line);
-    background: var(--bg);
     height: calc(100dvh - var(--header-h));
     overflow-y: auto;
   }
   .mobile-menu ul {
-    padding-block: 16px 40px;
+    padding-block: 12px 40px;
   }
   .mobile-menu a {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 0;
+    gap: 10px;
+    padding: 16px 0;
     border-bottom: 1px solid var(--line);
-    font-stretch: 72%;
-    font-weight: 820;
-    font-size: 2rem;
+    font-stretch: 70%;
+    font-weight: 800;
+    font-size: 2.125rem;
     text-transform: uppercase;
     text-decoration: none;
-    line-height: 1.1;
+    line-height: 1;
+  }
+  .mobile-menu a :global(.icon) {
+    color: var(--accent);
   }
   .mobile-menu a[aria-current='page'] {
     color: var(--accent);
   }
   .mobile-menu .mobile-ig {
+    font-family: var(--mono);
     font-stretch: 100%;
-    font-weight: 600;
-    font-size: 1rem;
+    font-weight: 500;
+    font-size: 0.875rem;
     text-transform: none;
     border-bottom: 0;
-    padding-top: 24px;
+    padding-top: 28px;
     color: var(--ink-2);
   }
-  @media (max-width: 1023px) {
+  @media (max-width: 1099px) {
     .ig-text {
       display: none;
     }
   }
-  @media (max-width: 899px) {
+  @media (max-width: 959px) {
     .nav,
     .ig {
       display: none;
@@ -225,7 +287,7 @@ const nav = [
       display: grid;
     }
   }
-  :global(html.menu-open) {
+  :global(html.no-scroll) {
     overflow: hidden;
   }
 </style>

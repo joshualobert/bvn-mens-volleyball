@@ -8,45 +8,58 @@ const { size = 'sm' } = Astro.props;
 <span class:list={['wordmark', size]}>
   <span class="mark">BVN</span>
   <span class="words">
-    <span>Men's</span>
-    <span>Volleyball</span>
+    <span class="w1">Men's Volleyball</span>
+    <span class="w2">Blue Valley North</span>
   </span>
 </span>
 
 <style>
   .wordmark {
     display: inline-flex;
-    align-items: stretch;
-    gap: 10px;
+    align-items: center;
+    gap: 12px;
     line-height: 1;
   }
   .mark {
     display: grid;
     place-items: center;
-    background: var(--brand-block);
-    color: var(--on-brand);
-    font-stretch: 72%;
-    font-weight: 880;
-    font-size: 1.375rem;
+    background: var(--ink);
+    color: var(--navy-950);
+    font-stretch: 70%;
+    font-weight: 850;
+    font-size: 1.25rem;
     letter-spacing: 0.01em;
-    padding: 6px 8px 5px;
+    padding: 7px 8px 6px;
+    box-shadow: inset 0 -3px 0 var(--accent);
   }
   .words {
     display: grid;
-    align-content: center;
-    gap: 2px;
-    font-stretch: 80%;
+    gap: 4px;
+    padding-left: 12px;
+    border-left: 1px solid var(--line-strong);
+  }
+  .w1 {
+    font-stretch: 75%;
     font-weight: 750;
-    font-size: 0.8125rem;
-    letter-spacing: 0.06em;
+    font-size: 0.9375rem;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
   }
-  .lg .mark {
-    font-size: 2.25rem;
-    padding: 8px 12px 7px;
+  .w2 {
+    font-family: var(--mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
   }
-  .lg .words {
-    font-size: 1.0625rem;
-    gap: 4px;
+  .lg .mark {
+    font-size: 2rem;
+    padding: 9px 12px 8px;
+  }
+  .lg .w1 {
+    font-size: 1.25rem;
+  }
+  .lg .w2 {
+    font-size: 0.6875rem;
   }
 </style>

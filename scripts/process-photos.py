@@ -27,7 +27,7 @@ PHOTOS = [
     ("raw:s7.jpg", "state-tournament-high-fives", "Teammates trade high fives after winning a rally at the state tournament", "50% 50%", "state", True),
     ("raw:s3.jpg", "state-tournament-jump-serve", "A BVN server tosses for a jump serve at the state tournament", "45% 40%", "state", True),
     ("raw:s0528.jpg", "state-tournament-celebration", "BVN players celebrate a point together at the state tournament", "60% 50%", "state", True),
-    ("raw:bvn1.jpg", "state-tournament-team-celebration", "BVN players celebrate together on court during the 2026 state tournament", "55% 45%", "state", False),
+    ("raw:bvn1.jpg", "state-tournament-team-celebration", "BVN players celebrate together on court during the 2026 state tournament", "55% 45%", "state", True),
     ("IMG_5929.JPG", "state-tournament-team-photo", "The team poses with their coach on state tournament day", "50% 45%", "state", False),
     ("raw:s2.jpg", "state-tournament-dig", "A BVN defender digs a hard-driven ball at the state tournament", "40% 50%", "state", True),
     ("IMG_1456.JPG", "spike-at-the-net", "A BVN outside hitter attacks the ball high above the net", "35% 40%", "season", False),

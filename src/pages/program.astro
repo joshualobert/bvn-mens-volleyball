@@ -17,12 +17,13 @@ const v26 = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
   <PageHero
     title="The Program"
     intro="Varsity and JV boys volleyball from Overland Park, competing in the KC Boys Volleyball high school league."
+    kicker="About"
     photo="huddle-hands-raised"
     focal="50% 60%"
   />
 
   <section class="section" aria-labelledby="about-title">
-    <div class="wrap about">
+    <div class="wrap about" data-reveal>
       <h2 id="about-title" class="display h-lg">About the program</h2>
       <div class="prose about-copy">
         <p>
@@ -44,12 +45,12 @@ const v26 = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
 
   <section class="section climb" aria-labelledby="climb-title">
     <div class="wrap">
-      <h2 id="climb-title" class="display h-lg">One season, nine places</h2>
+      <h2 data-reveal id="climb-title" class="display h-lg">One season, nine places</h2>
       <p class="lede climb-lede">
         In 2025 the varsity finished 14th of 24 in the league standings. A year later it finished 5th of 29 and took
         third at state.
       </p>
-      <div class="years">
+      <div class="years" data-reveal>
         <div class="year">
           <span class="y-label display">{v25.year}</span>
           <dl>
@@ -82,7 +83,7 @@ const v26 = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
   </section>
 
   <section class="section join" aria-labelledby="join-title">
-    <div class="wrap join-grid">
+    <div class="wrap join-grid" data-reveal>
       <h2 id="join-title" class="display h-lg">Get involved</h2>
       <div class="paths">
         <div class="path">
@@ -101,9 +102,9 @@ const v26 = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
         </div>
         <div class="path">
           <h3 class="display h-md">Fans</h3>
-          <p>Match days, results and photos are posted on Instagram throughout the season.</p>
-          <a class="arrow-link" href={team.instagram} rel="noopener" target="_blank">
-            Follow on Instagram <Icon name="arrowUpRight" size={18} />
+          <p>Full game film from the season is on the team YouTube channel.</p>
+          <a class="arrow-link" href={team.youtube} rel="noopener" target="_blank">
+            Watch on YouTube <Icon name="arrowUpRight" size={18} />
           </a>
         </div>
       </div>
@@ -123,6 +124,7 @@ const v26 = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
   }
   .climb {
     background: var(--surface);
+    border-block: 1px solid var(--line);
   }
   .climb-lede {
     margin-top: 20px;
@@ -131,7 +133,7 @@ const v26 = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
     margin-top: clamp(36px, 5vw, 64px);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border-top: 2px solid var(--ink);
+    border-top: 1px solid var(--line-strong);
   }
   .year {
     padding: 28px 32px 8px 0;
@@ -185,7 +187,7 @@ const v26 = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
   .paths {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    border-top: 2px solid var(--ink);
+    border-top: 1px solid var(--line-strong);
   }
   .path {
     display: grid;

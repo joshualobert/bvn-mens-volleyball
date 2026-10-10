@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
-import GameFilm from '../components/GameFilm.astro';
 import photos from '../data/photos.json';
 import { justifyRows } from '../lib/justify';
 import { team } from '../data/team';
@@ -24,27 +23,17 @@ const large = (s: Slug) => {
 
 <Base
   title="Photo Gallery"
-  description="Game film and photos of Blue Valley North Men's Volleyball from the 2026 season and the state tournament, including the state semifinal against KC East."
+  description="Photos of Blue Valley North Men's Volleyball from the 2026 season and the state tournament, plus a link to full game film on YouTube."
   path="/media/"
 >
   <PageHero
     title="Media"
-    intro="Game film, match action and team moments from the 2026 season and the state tournament."
+    intro="Match action, huddles and team moments from the 2026 season and the state tournament."
+    kicker="Photo gallery"
     photo="state-tournament-team-celebration"
     focal="55% 45%"
   />
 
-  <section class="section" id="film" aria-labelledby="film-title">
-    <div class="wrap">
-      <div class="g-head">
-        <h2 id="film-title" class="display h-md">Game Film</h2>
-        <a class="count yt-link" href={team.youtube} rel="noopener" target="_blank">
-          <Icon name="youtube" size={18} /> YouTube
-        </a>
-      </div>
-      <GameFilm />
-    </div>
-  </section>
 
   {
     groups.map((g) => (
@@ -81,13 +70,21 @@ const large = (s: Slug) => {
     ))
   }
 
-  <section class="section more">
-    <div class="wrap more-inner">
-      <p class="lede">More photos and match-day posts are on the team Instagram.</p>
-      <a class="btn btn-primary" href={team.instagram} rel="noopener" target="_blank">
-        <Icon name="instagram" size={18} />
-        {team.instagramHandle}
-      </a>
+  <section class="section section-alt" aria-labelledby="more-title">
+    <div class="wrap more">
+      <h2 id="more-title" class="display h-md">More from the team</h2>
+      <div class="more-links">
+        <a class="more-link" href={team.youtube} rel="noopener" target="_blank">
+          <Icon name="youtube" size={24} />
+          <span><strong>Game film</strong><span class="mono">YouTube / @Bvnmvb</span></span>
+          <Icon name="arrowUpRight" size={18} class="ml-arrow" />
+        </a>
+        <a class="more-link" href={team.instagram} rel="noopener" target="_blank">
+          <Icon name="instagram" size={24} />
+          <span><strong>Match-day posts</strong><span class="mono">Instagram / {team.instagramHandle}</span></span>
+          <Icon name="arrowUpRight" size={18} class="ml-arrow" />
+        </a>
+      </div>
     </div>
   </section>
 
@@ -187,16 +184,43 @@ const large = (s: Slug) => {
   .tile:hover :global(img) {
     transform: scale(1.02);
   }
-  .yt-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    text-decoration: none;
-    font-weight: 650;
-    color: var(--ink-2);
+  .more {
+    display: grid;
+    gap: 28px;
   }
-  .yt-link:hover {
-    color: var(--ink);
+  .more-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .more-link {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 18px;
+    align-items: center;
+    padding: 24px 26px;
+    border: 1px solid var(--line-strong);
+    background: var(--bg);
+    text-decoration: none;
+    transition: border-color 0.25s var(--ease);
+  }
+  .more-link:hover {
+    border-color: var(--accent);
+  }
+  .more-link > span {
+    display: grid;
+    gap: 6px;
+  }
+  .more-link strong {
+    font-size: 1.125rem;
+  }
+  .more-link :global(.ml-arrow) {
+    color: var(--accent);
+  }
+  @media (max-width: 767px) {
+    .more-links {
+      grid-template-columns: 1fr;
+    }
   }
   @media (max-width: 639px) {
     .row {
@@ -206,16 +230,6 @@ const large = (s: Slug) => {
       flex: none;
       width: 100%;
     }
-  }
-  .more {
-    background: var(--surface);
-  }
-  .more-inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
   }
   .lightbox {
     width: 100vw;

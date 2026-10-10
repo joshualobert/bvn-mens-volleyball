@@ -7,17 +7,20 @@ interface Props {
   intro?: string;
   photo: keyof typeof photos;
   focal?: string;
+  /** Small mono label above the title. */
+  kicker?: string;
 }
 
-const { title, intro, photo, focal } = Astro.props;
+const { title, intro, photo, focal, kicker = "BVN Men's Volleyball" } = Astro.props;
 ---
 
-<section class="page-hero on-photo">
+<section class="page-hero">
   <Photo slug={photo} eager sizes="100vw" class="ph-img" focal={focal} />
   <div class="ph-scrim" aria-hidden="true"></div>
   <div class="wrap ph-inner">
-    <h1 class="display h-xl rise">{title}</h1>
-    {intro && <p class="ph-intro rise rise-2">{intro}</p>}
+    <p class="label label-accent rise">{kicker}</p>
+    <h1 class="display h-xl rise rise-2">{title}</h1>
+    {intro && <p class="ph-intro rise rise-3">{intro}</p>}
     <slot />
   </div>
 </section>
@@ -25,12 +28,13 @@ const { title, intro, photo, focal } = Astro.props;
 <style>
   .page-hero {
     position: relative;
-    min-height: clamp(360px, 52vw, 560px);
+    min-height: clamp(440px, 58vw, 640px);
     display: grid;
     align-items: end;
-    color: #f3f5f8;
+    color: var(--ink);
     background: var(--navy-950);
     overflow: hidden;
+    border-bottom: 1px solid var(--line);
   }
   .page-hero :global(.ph-img) {
     position: absolute;
@@ -43,18 +47,20 @@ const { title, intro, photo, focal } = Astro.props;
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(to top, rgb(var(--scrim) / 0.9) 0%, rgb(var(--scrim) / 0.45) 45%, rgb(var(--scrim) / 0.15) 100%),
-      linear-gradient(to right, rgb(var(--scrim) / 0.45) 0%, rgb(var(--scrim) / 0) 60%);
+      linear-gradient(to top, rgb(var(--scrim) / 1) 0%, rgb(var(--scrim) / 0.55) 45%, rgb(var(--scrim) / 0.25) 100%),
+      linear-gradient(to right, rgb(var(--scrim) / 0.6) 0%, rgb(var(--scrim) / 0) 65%);
   }
   .ph-inner {
     position: relative;
-    padding-block: 96px clamp(36px, 5vw, 60px);
+    display: grid;
+    gap: 18px;
+    justify-items: start;
+    padding-block: 140px clamp(40px, 5vw, 64px);
   }
   .ph-intro {
-    margin-top: 18px;
-    max-width: 52ch;
-    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
-    line-height: 1.5;
-    color: rgb(243 245 248 / 0.88);
+    max-width: 54ch;
+    font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    line-height: 1.55;
+    color: var(--ink-2);
   }
 </style>

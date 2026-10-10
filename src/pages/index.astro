@@ -15,179 +15,195 @@ const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
   description="Blue Valley North Men's Volleyball (BVN Boys Volleyball) from Overland Park, Kansas. Third place at the 2026 state championship. Roster, schedule, results and photos."
   path="/"
 >
-  <section class="hero on-photo" aria-labelledby="hero-title" style={`--hero-preview: url(${heroPreview.trim()})`}>
+  <section class="hero" aria-labelledby="hero-title" style={`--hero-preview: url(${heroPreview.trim()})`}>
     <Photo slug="attack-over-the-block" eager sizes="100vw" class="hero-img" focal="30% 12%" />
     <div class="hero-scrim" aria-hidden="true"></div>
     <div class="wrap hero-inner">
-      <h1 id="hero-title" class="display rise">
-        <span class="h1-school">Blue Valley North</span>
-        <span class="h1-sport">Men's Volleyball</span>
-      </h1>
-      <p class="hero-sub rise rise-2">
-        Mustangs boys volleyball from Overland Park, Kansas. Third place at the 2026 state championship.
-      </p>
-      <div class="hero-ctas rise rise-3">
-        <a class="btn btn-primary" href={url('/schedule/')}>Schedule <Icon name="arrowRight" size={18} /></a>
-        <a class="btn btn-secondary" href={url('/roster/')}>Roster</a>
+      <div class="hero-copy">
+        <p class="label label-accent rise">Blue Valley North / Overland Park, KS</p>
+        <h1 id="hero-title" class="display rise rise-2">Men's<br />Volleyball</h1>
+        <p class="hero-sub rise rise-3">Mustangs boys volleyball. Third place at the 2026 state championship.</p>
+        <div class="hero-ctas rise rise-4">
+          <a class="btn btn-primary" href={url('/schedule/')}>Schedule <Icon name="arrowRight" size={16} /></a>
+          <a class="btn btn-secondary" href={url('/roster/')}>Roster</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="scoreboard" aria-labelledby="season-title">
+  <section class="statbar-wrap" aria-labelledby="season-title">
     <div class="wrap">
-      <h2 id="season-title" class="label">2026 varsity season</h2>
-      <dl class="stats">
-        <div>
-          <dt>Match record</dt>
-          <dd class="display">{season.wins}-{season.losses}</dd>
-        </div>
-        <div>
-          <dt>Sets won and lost</dt>
-          <dd class="display">{season.setWins}-{season.setLosses}</dd>
-        </div>
-        <div>
-          <dt>State championship</dt>
-          <dd class="display">3rd</dd>
-        </div>
-        <div>
-          <dt>League final ranking</dt>
-          <dd class="display">5th<span class="of"> of {season.teams}</span></dd>
-        </div>
-      </dl>
-      <p class="source">
-        Records from the <a class="text-link" href={team.league.standings} rel="noopener" target="_blank"
-          >{team.league.name} final standings</a
-        >.
-      </p>
+      <div class="statbar" data-reveal>
+        <h2 id="season-title" class="statbar-title label">
+          <span class="label-accent">2026</span> Varsity season
+        </h2>
+        <dl class="stats">
+          <div>
+            <dt class="label">Record</dt>
+            <dd class="display"><span data-count={season.wins}>{season.wins}</span>-<span data-count={season.losses}>{season.losses}</span></dd>
+          </div>
+          <div>
+            <dt class="label">Sets</dt>
+            <dd class="display"><span data-count={season.setWins}>{season.setWins}</span>-<span data-count={season.setLosses}>{season.setLosses}</span></dd>
+          </div>
+          <div>
+            <dt class="label">State</dt>
+            <dd class="display"><span data-count="3">3</span><span class="suf">rd</span></dd>
+          </div>
+          <div>
+            <dt class="label">League rank</dt>
+            <dd class="display"><span data-count={season.rank}>{season.rank}</span><span class="suf">/{season.teams}</span></dd>
+          </div>
+        </dl>
+        <a class="statbar-src mono" href={team.league.standings} rel="noopener" target="_blank">
+          Source: {team.league.name} final standings <Icon name="arrowUpRight" size={12} />
+        </a>
+      </div>
     </div>
   </section>
 
-  <section class="section state" aria-labelledby="state-title">
-    <div class="wrap state-grid">
-      <figure class="state-main">
-        <Photo slug="state-tournament-huddle" sizes="(min-width: 900px) 58vw, 100vw" class="photo-fill" />
-      </figure>
-      <div class="state-copy">
+  <section class="section" aria-labelledby="state-title">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="label rule-label">2026 Postseason</p>
         <h2 id="state-title" class="display h-lg">Final Four at Horejsi</h2>
-        <p class="lede">
-          BVN went 4-0 on state tournament day to reach the Final Four, met KC East in the first semifinal at Horejsi
-          Arena, and finished third in the state.
-        </p>
-        <ol class="timeline">
+      </div>
+      <div class="bento">
+        <figure class="b-main frame" data-reveal>
+          <Photo slug="state-tournament-team-celebration" sizes="(min-width: 960px) 60vw, 100vw" class="photo-fill" />
+        </figure>
+        <div class="b-copy" data-reveal>
+          <p class="lede">
+            BVN went 4-0 on state tournament day to reach the Final Four, met KC East in the first semifinal at Horejsi
+            Arena, and finished third in the state.
+          </p>
+          <ol class="timeline">
+            {
+              postseason.map((step) => {
+                const d = dateParts(step.date);
+                return (
+                  <li>
+                    <span class="t-date mono">
+                      {d.month} {String(d.day).padStart(2, '0')}
+                    </span>
+                    <span class="t-body">
+                      <strong>{step.title}</strong>
+                      <span>{step.detail}</span>
+                    </span>
+                  </li>
+                );
+              })
+            }
+          </ol>
+        </div>
+        <figure class="b-a frame" data-reveal>
+          <Photo slug="state-tournament-attack" sizes="(min-width: 960px) 30vw, 50vw" class="photo-fill" />
+        </figure>
+        <figure class="b-b frame" data-reveal>
+          <Photo slug="state-tournament-high-fives" sizes="(min-width: 960px) 30vw, 50vw" class="photo-fill" />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" aria-labelledby="roster-title">
+    <div class="wrap">
+      <div class="section-head split" data-reveal>
+        <h2 id="roster-title" class="display h-lg">2026 Varsity</h2>
+        <a class="arrow-link" href={url('/roster/')}>Roster <Icon name="arrowRight" size={16} /></a>
+      </div>
+      <ul class="players" data-reveal>
+        {
+          varsity.players.map((p) => (
+            <li>
+              <span class="pos-code mono">{p.positions?.join('/')}</span>
+              <span class="p-name display">{p.name}</span>
+              <span class="p-pos">{p.positions?.map((x) => positionNames[x]).join(' / ')}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="schedule-title">
+    <div class="wrap">
+      <div class="section-head split" data-reveal>
+        <h2 id="schedule-title" class="display h-lg">2026 Schedule</h2>
+        <a class="arrow-link" href={url('/schedule/')}>Schedule <Icon name="arrowRight" size={16} /></a>
+      </div>
+      <div class="sched" data-reveal>
+        <div class="sched-head mono" aria-hidden="true">
+          <span>Date</span><span>Opponents</span><span>Site</span>
+        </div>
+        <ol>
           {
-            postseason.map((step) => {
-              const d = dateParts(step.date);
+            varsitySchedule.map((m) => {
+              const d = dateParts(m.date);
               return (
                 <li>
-                  <span class="t-date">
-                    {d.month} {d.day}
+                  <span class="s-date">
+                    <span class="mono s-wk">{d.weekday}</span>
+                    <span class="display s-day">
+                      {d.month} {d.day}
+                    </span>
                   </span>
-                  <span class="t-body">
-                    <strong>{step.title}</strong>
-                    {step.detail}
+                  <span class="s-opp">
+                    {m.opponents.map((o) => (
+                      <span>
+                        <span class="vs mono">vs</span> {o}
+                      </span>
+                    ))}
                   </span>
+                  <span class:list={['chip', { 'chip-accent': m.site === 'Home' }]}>{m.site}</span>
                 </li>
               );
             })
           }
         </ol>
+        <p class="sched-note mono">Postseason: state tournament May 2, Final Four May 5. 2027 schedule to be announced.</p>
       </div>
-      <figure class="state-side">
-        <Photo slug="state-tournament-attack" sizes="(min-width: 900px) 30vw, 50vw" class="photo-fill" />
-      </figure>
-      <figure class="state-side-2">
-        <Photo slug="state-tournament-high-fives" sizes="(min-width: 900px) 24vw, 50vw" class="photo-fill" />
-      </figure>
     </div>
   </section>
 
-  <section class="section roster" aria-labelledby="roster-title">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 id="roster-title" class="display h-lg">2026 Varsity</h2>
-      </div>
-      <ul class="names">
-        {
-          varsity.players.map((p) => (
-            <li>
-              <span class="name display">{p.name}</span>
-              <span class="pos">{p.positions?.map((x) => positionNames[x]).join(' / ')}</span>
-            </li>
-          ))
-        }
-      </ul>
-      <a class="arrow-link" href={url('/roster/')}>Roster <Icon name="arrowRight" size={18} /></a>
-    </div>
-  </section>
-
-  <section class="section schedule" aria-labelledby="schedule-title">
-    <div class="wrap schedule-grid">
-      <div class="schedule-head">
-        <h2 id="schedule-title" class="display h-lg">2026 Schedule</h2>
-        <p class="prose">
-          Six regular season match days, each against two opponents, followed by the state tournament on May 2 and the
-          Final Four on May 5. The 2027 schedule will be posted here and on Instagram once it is released.
-        </p>
-        <a class="arrow-link" href={url('/schedule/')}>Schedule <Icon name="arrowRight" size={18} /></a>
-      </div>
-      <ol class="days">
-        {
-          varsitySchedule.map((m) => {
-            const d = dateParts(m.date);
-            return (
-              <li>
-                <span class="d-date">
-                  <span class="d-mon">{d.month}</span>
-                  <span class="d-day display">{d.day}</span>
-                </span>
-                <span class="d-opp">
-                  {m.opponents.map((o) => (
-                    <span>{o}</span>
-                  ))}
-                </span>
-                <span class:list={['d-site', m.site.toLowerCase()]}>{m.site}</span>
-              </li>
-            );
-          })
-        }
-      </ol>
-    </div>
-  </section>
-
-  <section class="mosaic" aria-label="Photos from the 2026 season">
+  <section class="mosaic" aria-label="Photos from the 2026 season" data-reveal>
     <div class="mosaic-grid">
-      <Photo slug="huddle-hands-raised" sizes="(min-width: 900px) 50vw, 100vw" class="photo-fill m1" />
-      <Photo slug="attack-number-21" sizes="(min-width: 900px) 25vw, 50vw" class="photo-fill m2" />
-      <Photo slug="jersey-number-15" sizes="(min-width: 900px) 25vw, 50vw" class="photo-fill m3" />
-      <Photo slug="timeout-with-coach" sizes="(min-width: 900px) 25vw, 50vw" class="photo-fill m4" />
+      <figure class="frame m1"><Photo slug="huddle-hands-raised" sizes="(min-width: 960px) 50vw, 100vw" class="photo-fill" /></figure>
+      <figure class="frame m2"><Photo slug="attack-number-21" sizes="(min-width: 960px) 25vw, 50vw" class="photo-fill" /></figure>
+      <figure class="frame m3"><Photo slug="state-tournament-team-photo" sizes="(min-width: 960px) 25vw, 50vw" class="photo-fill" /></figure>
+      <figure class="frame m4"><Photo slug="timeout-with-coach" sizes="(min-width: 960px) 25vw, 50vw" class="photo-fill" /></figure>
     </div>
     <div class="wrap mosaic-foot">
-      <a class="arrow-link" href={url('/media/')}>Photo gallery <Icon name="arrowRight" size={18} /></a>
+      <a class="arrow-link" href={url('/media/')}>Photo gallery <Icon name="arrowRight" size={16} /></a>
     </div>
   </section>
 
-  <section class="section follow" aria-labelledby="follow-title">
-    <div class="wrap follow-grid">
-      <div>
+  <section class="section" aria-labelledby="follow-title">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="label rule-label">Follow</p>
         <h2 id="follow-title" class="display h-lg">Follow the Mustangs</h2>
-        <p class="lede">
-          Match days, results and photos go up first on the team Instagram, and full game film is on YouTube.
-          Prospective players and families can reach the team on Instagram.
-        </p>
-        <div class="follow-ctas">
-          <a class="btn btn-primary" href={team.instagram} rel="noopener" target="_blank">
-            <Icon name="instagram" size={18} />
-            {team.instagramHandle}
-          </a>
-          <a class="btn btn-secondary" href={url('/media/#film')}>
-            <Icon name="youtube" size={18} />
-            Game film
-          </a>
-        </div>
       </div>
-      <figure class="follow-photo">
-        <Photo slug="bench-applause" sizes="(min-width: 900px) 34vw, 100vw" class="photo-fill" />
-      </figure>
+      <div class="channels" data-reveal>
+        <a class="channel" href={team.instagram} rel="noopener" target="_blank">
+          <span class="ch-top">
+            <Icon name="instagram" size={28} />
+            <Icon name="arrowUpRight" size={20} class="ch-arrow" />
+          </span>
+          <span class="ch-name display">Instagram</span>
+          <span class="ch-handle mono">{team.instagramHandle}</span>
+          <span class="ch-desc">Match days, results, photos and team announcements. Prospective players can message the team here.</span>
+        </a>
+        <a class="channel" href={team.youtube} rel="noopener" target="_blank">
+          <span class="ch-top">
+            <Icon name="youtube" size={28} />
+            <Icon name="arrowUpRight" size={20} class="ch-arrow" />
+          </span>
+          <span class="ch-name display">YouTube</span>
+          <span class="ch-handle mono">@Bvnmvb</span>
+          <span class="ch-desc">Full game film from the 2026 season, including the state semifinal against KC East.</span>
+        </a>
+      </div>
     </div>
   </section>
 </Base>
@@ -196,10 +212,10 @@ const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
   /* Hero */
   .hero {
     position: relative;
-    min-height: min(calc(100dvh - var(--header-h)), 900px);
+    min-height: max(640px, 100dvh);
     display: grid;
     align-items: end;
-    color: #f3f5f8;
+    color: var(--ink);
     background: var(--navy-950) var(--hero-preview) 30% 12% / cover no-repeat;
     overflow: hidden;
   }
@@ -214,238 +230,244 @@ const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(to top, rgb(var(--scrim) / 0.9) 0%, rgb(var(--scrim) / 0.5) 34%, rgb(var(--scrim) / 0.12) 62%),
-      linear-gradient(to left, rgb(var(--scrim) / 0.78) 0%, rgb(var(--scrim) / 0.35) 45%, rgb(var(--scrim) / 0) 62%);
+      linear-gradient(to top, rgb(var(--scrim) / 1) 0%, rgb(var(--scrim) / 0.6) 30%, rgb(var(--scrim) / 0.1) 62%),
+      linear-gradient(to left, rgb(var(--scrim) / 0.85) 0%, rgb(var(--scrim) / 0.35) 45%, rgb(var(--scrim) / 0) 65%);
   }
   .hero-inner {
     position: relative;
-    padding-block: 120px clamp(40px, 6vw, 72px);
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+    padding-block: 140px 168px;
   }
-  .hero-inner > * {
+  .hero-copy {
     grid-column: 7 / -1;
+    display: grid;
+    gap: 22px;
+    justify-items: start;
   }
   .hero h1 {
-    display: grid;
-    gap: 14px;
-  }
-  .h1-school {
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
-    font-stretch: 85%;
-    font-weight: 750;
-    letter-spacing: 0.1em;
-    line-height: 1;
-    color: var(--accent-bright);
-  }
-  .h1-sport {
-    font-size: clamp(3.25rem, 7.4vw, 7rem);
-    max-width: 9ch;
+    font-size: clamp(3.5rem, 8.4vw, 8.25rem);
+    line-height: 0.86;
   }
   .hero-sub {
-    margin-top: 20px;
-    max-width: 44ch;
-    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
-    line-height: 1.5;
-    color: rgb(243 245 248 / 0.88);
+    max-width: 40ch;
+    font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    color: var(--ink-2);
   }
   .hero-ctas {
-    margin-top: 32px;
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
+    margin-top: 6px;
   }
 
-  /* Scoreboard */
-  .scoreboard {
-    background: var(--surface);
-    border-bottom: 1px solid var(--line);
-    padding-block: clamp(36px, 5vw, 56px);
+  /* Stat bar overlapping the hero */
+  .statbar-wrap {
+    position: relative;
+    z-index: 2;
+    margin-top: -112px;
+  }
+  .statbar {
+    background: rgb(10 20 39 / 0.78);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.6);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+  }
+  .statbar-title {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    padding: 26px 28px;
+    border-right: 1px solid var(--line);
+    display: grid;
+    align-content: center;
+    gap: 6px;
+    min-width: 170px;
+  }
+  .statbar-title .label-accent {
+    font-family: var(--font);
+    font-stretch: 70%;
+    font-weight: 800;
+    font-size: 2.5rem;
+    letter-spacing: 0;
+    line-height: 1;
   }
   .stats {
-    margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
   }
   .stats > div {
-    padding: 4px 24px;
-    border-left: 1px solid var(--line);
-    display: flex;
-    flex-direction: column-reverse;
+    padding: 24px 28px 18px;
+    display: grid;
     gap: 10px;
+    align-content: start;
   }
-  .stats > div:first-child {
-    border-left: 0;
-    padding-left: 0;
-  }
-  .stats dt {
-    font-size: 0.9375rem;
-    color: var(--muted);
+  .stats > div + div {
+    border-left: 1px solid var(--line);
   }
   .stats dd {
-    font-size: clamp(2.75rem, 5.4vw, 4.75rem);
+    font-size: clamp(2.5rem, 4.4vw, 4rem);
+    line-height: 0.95;
+  }
+  .stats .suf {
+    font-size: 0.45em;
+    color: var(--muted);
+    margin-left: 2px;
+  }
+  .statbar-src {
+    grid-column: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 28px;
+    border-top: 1px solid var(--line);
+    text-decoration: none;
+    font-size: 0.6875rem;
+  }
+  .statbar-src:hover {
     color: var(--ink);
   }
-  .stats .of {
-    font-size: 0.42em;
-    color: var(--muted);
-    letter-spacing: 0.02em;
-  }
-  .source {
-    margin-top: 24px;
-    font-size: 0.875rem;
-    color: var(--muted);
+
+  /* Section head variant: headline left, link right */
+  .split {
+    grid-template-columns: 1fr auto;
+    align-items: end;
   }
 
-  /* State run */
-  .state-grid {
+  /* Bento */
+  .bento {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: auto auto;
-    gap: clamp(16px, 2vw, 28px);
+    gap: 12px;
   }
-  .state-main {
-    grid-column: 1 / span 7;
+  .b-main {
+    grid-column: 1 / span 8;
     grid-row: 1;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 2;
   }
-  .state-copy {
+  .b-copy {
     grid-column: 9 / span 4;
     grid-row: 1 / span 2;
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    align-self: start;
-    padding-top: 8px;
+    gap: 28px;
+    padding: 8px 0 0 20px;
   }
-  .state-side {
+  .b-a {
     grid-column: 1 / span 4;
     grid-row: 2;
     aspect-ratio: 3 / 2;
   }
-  .state-side-2 {
-    grid-column: 5 / span 3;
+  .b-b {
+    grid-column: 5 / span 4;
     grid-row: 2;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 3 / 2;
   }
   .timeline {
     border-top: 1px solid var(--line-strong);
   }
   .timeline li {
     display: grid;
-    grid-template-columns: 72px 1fr;
+    grid-template-columns: 64px 1fr;
     gap: 16px;
-    padding: 16px 0;
+    padding: 18px 0;
     border-bottom: 1px solid var(--line);
   }
   .t-date {
-    font-weight: 750;
-    font-size: 0.875rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
     color: var(--accent);
-    padding-top: 2px;
+    padding-top: 3px;
   }
   .t-body {
     display: grid;
-    gap: 2px;
+    gap: 4px;
     color: var(--ink-2);
     font-size: 0.9875rem;
   }
   .t-body strong {
     color: var(--ink);
-    font-weight: 750;
+    font-weight: 700;
+    font-size: 1.0625rem;
   }
 
-  /* Roster */
-  .roster {
-    background: var(--surface);
-  }
-  .names {
+  /* Players */
+  .players {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     border-top: 1px solid var(--line-strong);
-    margin-bottom: 40px;
+    border-left: 1px solid var(--line);
   }
-  .names li {
-    padding: 22px 24px 22px 0;
-    border-bottom: 1px solid var(--line);
+  .players li {
+    position: relative;
     display: grid;
-    gap: 6px;
+    gap: 10px;
+    padding: 26px 24px 28px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    transition: background-color 0.25s var(--ease);
   }
-  .name {
-    font-size: clamp(1.625rem, 2.6vw, 2.25rem);
-    line-height: 1;
+  .players li:hover {
+    background: var(--surface-2);
   }
-  .pos {
-    font-size: 0.9375rem;
+  .pos-code {
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+  .p-name {
+    font-size: clamp(1.625rem, 2.4vw, 2.25rem);
+    line-height: 0.95;
+  }
+  .p-pos {
     color: var(--muted);
+    font-size: 0.9375rem;
   }
 
   /* Schedule */
-  .schedule-grid {
+  .sched-head,
+  .sched li {
     display: grid;
-    grid-template-columns: 5fr 7fr;
-    gap: clamp(32px, 6vw, 96px);
-    align-items: start;
-  }
-  .schedule-head {
-    display: grid;
+    grid-template-columns: 180px 1fr auto;
     gap: 24px;
-    justify-items: start;
-    position: sticky;
-    top: calc(var(--header-h) + 32px);
-  }
-  .days {
-    border-top: 1px solid var(--line-strong);
-  }
-  .days li {
-    display: grid;
-    grid-template-columns: 76px 1fr auto;
-    gap: 20px;
     align-items: center;
-    padding: 18px 0;
+  }
+  .sched-head {
+    padding: 0 0 12px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .sched li {
+    padding: 20px 0;
     border-bottom: 1px solid var(--line);
+    transition: background-color 0.25s var(--ease);
   }
-  .d-date {
+  .sched li:hover {
+    background: linear-gradient(to right, var(--accent-soft), transparent 60%);
+  }
+  .s-date {
     display: grid;
-    line-height: 1;
+    gap: 6px;
+  }
+  .s-wk {
+    font-size: 0.6875rem;
+  }
+  .s-day {
+    font-size: 1.875rem;
+  }
+  .s-opp {
+    display: grid;
     gap: 4px;
-  }
-  .d-mon {
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .d-day {
-    font-size: 2.5rem;
-  }
-  .d-opp {
-    display: grid;
-    gap: 2px;
     font-weight: 600;
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
   }
-  .d-opp span::before {
-    content: 'vs ';
-    font-weight: 400;
+  .vs {
     color: var(--muted);
+    font-size: 0.75rem;
+    margin-right: 4px;
   }
-  .d-site {
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 6px 10px;
-    border: 1px solid var(--line-strong);
-    color: var(--ink-2);
-  }
-  .d-site.home {
-    background: var(--brand-block);
-    border-color: var(--brand-block);
-    color: var(--on-brand);
+  .sched-note {
+    margin-top: 20px;
   }
 
   /* Mosaic */
@@ -457,12 +479,10 @@ const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
     grid-template-columns: 2fr 1fr 1fr;
     grid-template-rows: repeat(2, minmax(0, 1fr));
     gap: 4px;
-    height: clamp(420px, 56vw, 760px);
+    height: clamp(440px, 56vw, 780px);
   }
-  .mosaic-grid :global(.m1) {
-    grid-row: 1 / span 2;
-  }
-  .mosaic-grid :global(.m2) {
+  .m1,
+  .m2 {
     grid-row: 1 / span 2;
   }
   .mosaic-foot {
@@ -471,112 +491,186 @@ const season = seasons.find((s) => s.year === 2026 && s.level === 'Varsity')!;
     justify-content: flex-end;
   }
 
-  /* Follow */
-  .follow-grid {
+  /* Channels */
+  .channels {
     display: grid;
-    grid-template-columns: 7fr 4fr;
-    gap: clamp(32px, 6vw, 96px);
-    align-items: center;
-  }
-  .follow-grid > div {
-    display: grid;
-    gap: 24px;
-    justify-items: start;
-  }
-  .follow-ctas {
-    display: flex;
-    flex-wrap: wrap;
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
   }
-  .follow-photo {
-    aspect-ratio: 4 / 5;
+  .channel {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    padding: 32px;
+    border: 1px solid var(--line-strong);
+    background: linear-gradient(160deg, var(--surface-2), var(--surface) 70%);
+    text-decoration: none;
+    color: var(--ink);
+    transition:
+      border-color 0.25s var(--ease),
+      transform 0.25s var(--ease);
+  }
+  .channel:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .ch-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 28px;
+  }
+  .ch-top :global(.ch-arrow) {
+    color: var(--accent);
+    transition: transform 0.25s var(--ease);
+  }
+  .channel:hover :global(.ch-arrow) {
+    transform: translate(3px, -3px);
+  }
+  .ch-name {
+    font-size: clamp(2rem, 3.4vw, 3rem);
+  }
+  .ch-handle {
+    color: var(--accent);
+  }
+  .ch-desc {
+    color: var(--ink-2);
+    max-width: 46ch;
+    margin-top: 6px;
   }
 
-  @media (max-width: 899px) {
+  @media (max-width: 959px) {
+    .hero-copy {
+      grid-column: 1 / -1;
+    }
+    .hero-scrim {
+      background: linear-gradient(to top, rgb(var(--scrim) / 1) 0%, rgb(var(--scrim) / 0.65) 42%, rgb(var(--scrim) / 0.05) 72%);
+    }
+    .statbar {
+      grid-template-columns: 1fr;
+    }
+    .statbar-title {
+      grid-row: auto;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+      grid-auto-flow: column;
+      justify-content: start;
+      align-items: baseline;
+      gap: 12px;
+      padding: 18px 20px;
+    }
+    .statbar-title .label-accent {
+      font-size: 1.75rem;
+    }
     .stats {
       grid-template-columns: 1fr 1fr;
-      row-gap: 28px;
     }
     .stats > div:nth-child(3) {
       border-left: 0;
-      padding-left: 0;
     }
-    .state-grid {
+    .stats > div:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+    .stats > div {
+      padding: 20px;
+    }
+    .statbar-src {
+      grid-column: 1;
+      padding: 12px 20px;
+    }
+    .bento {
       grid-template-columns: 1fr 1fr;
     }
-    .state-main {
+    .b-main,
+    .b-copy {
       grid-column: 1 / -1;
       grid-row: auto;
     }
-    .state-copy {
-      grid-column: 1 / -1;
-      grid-row: auto;
+    .b-copy {
+      padding: 12px 0 8px;
     }
-    .state-side,
-    .state-side-2 {
-      grid-row: auto;
+    .b-a,
+    .b-b {
       grid-column: span 1;
-      aspect-ratio: 1 / 1;
+      grid-row: auto;
     }
-    .names {
+    .players {
       grid-template-columns: 1fr 1fr;
     }
-    .schedule-grid,
-    .follow-grid {
-      grid-template-columns: 1fr;
-    }
-    .schedule-head {
-      position: static;
+    .sched-head,
+    .sched li {
+      grid-template-columns: 120px 1fr auto;
+      gap: 16px;
     }
     .mosaic-grid {
       grid-template-columns: 1fr 1fr;
       grid-template-rows: auto;
       height: auto;
     }
-    .mosaic-grid :global(.m1) {
+    .m1 {
       grid-column: 1 / -1;
       grid-row: auto;
       aspect-ratio: 3 / 2;
     }
-    .mosaic-grid :global(.m2) {
+    .m2 {
       grid-row: span 2;
     }
-    .mosaic-grid :global(.m3),
-    .mosaic-grid :global(.m4) {
+    .m3,
+    .m4 {
       aspect-ratio: 1 / 1;
     }
-  }
-  @media (max-width: 899px) {
-    .hero-inner > * {
-      grid-column: 1 / -1;
-    }
-    .hero-scrim {
-      background: linear-gradient(to top, rgb(var(--scrim) / 0.94) 0%, rgb(var(--scrim) / 0.6) 40%, rgb(var(--scrim) / 0) 70%);
-    }
-  }
-  @media (max-width: 559px) {
-    .hero-inner {
-      padding-top: 96px;
-    }
-    .names {
+    .channels {
       grid-template-columns: 1fr;
     }
-    .names li {
-      padding: 18px 0;
+  }
+  @media (max-width: 599px) {
+    .hero-inner {
+      padding-block: 120px 150px;
     }
     .hero-ctas .btn {
-      flex: 1 1 100%;
+      flex: 1 1 auto;
       justify-content: center;
     }
-    .days li {
-      grid-template-columns: 56px 1fr auto;
+    .statbar-wrap {
+      margin-top: -96px;
+    }
+    .players {
+      grid-template-columns: 1fr;
+    }
+    .players li {
+      padding: 20px;
+    }
+    .sched-head {
+      display: none;
+    }
+    .sched li {
+      grid-template-columns: 1fr auto;
+      grid-template-areas: 'date site' 'opp opp';
+      gap: 10px;
+    }
+    .s-date {
+      grid-area: date;
+      grid-auto-flow: column;
+      justify-content: start;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .s-opp {
+      grid-area: opp;
+      font-size: 1rem;
+    }
+    .sched li .chip {
+      grid-area: site;
+    }
+    .split {
+      grid-template-columns: 1fr;
       gap: 14px;
     }
-    .d-day {
-      font-size: 2rem;
+    .split .arrow-link {
+      justify-self: start;
     }
-    .d-opp {
-      font-size: 0.9875rem;
+    .channel {
+      padding: 24px;
     }
   }
 </style>

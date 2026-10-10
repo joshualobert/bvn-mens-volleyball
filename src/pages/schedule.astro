@@ -19,12 +19,13 @@ const tables: { id: string; title: string; days: MatchDay[] }[] = [
   <PageHero
     title="Schedule and Results"
     intro="The complete 2026 season. The 2027 schedule will be posted here once it is released."
+    kicker="2026 Season"
     photo="state-tournament-attack"
     focal="50% 35%"
   />
 
   <section class="section" aria-labelledby="post-title">
-    <div class="wrap">
+    <div class="wrap" data-reveal>
       <h2 id="post-title" class="display h-lg">2026 Postseason</h2>
       <ol class="post">
         {
@@ -32,7 +33,7 @@ const tables: { id: string; title: string; days: MatchDay[] }[] = [
             const d = dateParts(step.date);
             return (
               <li>
-                <span class="p-date">
+                <span class="p-date mono">
                   {d.weekday}, {d.month} {d.day}
                 </span>
                 <span class="p-title display">{step.title}</span>
@@ -46,7 +47,7 @@ const tables: { id: string; title: string; days: MatchDay[] }[] = [
   </section>
 
   <section class="section" aria-labelledby="records-title">
-    <div class="wrap">
+    <div class="wrap" data-reveal>
       <h2 id="records-title" class="display h-md">Season records</h2>
       <div class="table-wrap">
         <table class="records">
@@ -93,7 +94,7 @@ const tables: { id: string; title: string; days: MatchDay[] }[] = [
   {
     tables.map((t) => (
       <section class="section" aria-labelledby={`${t.id}-title`}>
-        <div class="wrap">
+        <div class="wrap" data-reveal>
           <h2 id={`${t.id}-title`} class="display h-md">
             {t.title}
           </h2>
@@ -115,17 +116,17 @@ const tables: { id: string; title: string; days: MatchDay[] }[] = [
                         <span class="s-day display">
                           {d.month} {d.day}
                         </span>
-                        <span class="s-wk">{d.weekday}</span>
+                        <span class="s-wk mono">{d.weekday}</span>
                       </td>
                       <td class="s-opp">
                         {m.opponents.map((o) => (
                           <span>
-                            <span class="vs">vs</span> {o}
+                            <span class="vs mono">vs</span> {o}
                           </span>
                         ))}
                       </td>
                       <td>
-                        <span class:list={['site', m.site.toLowerCase()]}>{m.site}</span>
+                        <span class:list={['chip', { 'chip-accent': m.site === 'Home' }]}>{m.site}</span>
                       </td>
                     </tr>
                   );
@@ -162,7 +163,7 @@ const tables: { id: string; title: string; days: MatchDay[] }[] = [
     margin-top: clamp(32px, 4vw, 48px);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    border-top: 2px solid var(--ink);
+    border-top: 1px solid var(--line-strong);
   }
   .post li {
     display: grid;
@@ -175,10 +176,6 @@ const tables: { id: string; title: string; days: MatchDay[] }[] = [
     border-left: 1px solid var(--line);
   }
   .p-date {
-    font-weight: 750;
-    font-size: 0.875rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
     color: var(--accent);
   }
   .p-title {
@@ -197,9 +194,10 @@ const tables: { id: string; title: string; days: MatchDay[] }[] = [
   }
   th {
     text-align: left;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--muted);
     padding: 0 16px 12px 0;
@@ -243,26 +241,18 @@ const tables: { id: string; title: string; days: MatchDay[] }[] = [
     font-size: 1.0625rem;
   }
   .vs {
-    font-weight: 400;
     color: var(--muted);
+    margin-right: 4px;
   }
-  .site {
-    display: inline-block;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 6px 10px;
-    border: 1px solid var(--line-strong);
-    color: var(--ink-2);
+  tbody tr {
+    transition: background-color 0.2s var(--ease);
   }
-  .site.home {
-    background: var(--brand-block);
-    border-color: var(--brand-block);
-    color: var(--on-brand);
+  tbody tr:hover {
+    background: var(--surface);
   }
   .next {
     background: var(--surface);
+    border-top: 1px solid var(--line);
   }
   .next-inner {
     display: grid;
